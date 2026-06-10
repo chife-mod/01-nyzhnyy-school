@@ -339,7 +339,7 @@ a.ref-card:hover { border-color: rgba(159,186,205,0.3); background: rgba(255,255
    Adaptive (tablet+mobile) is computed as % of design base.
    Edit numbers here → everything (cards, rollup, totals) updates.
    ─────────────────────────────────────────────────────────────── */
-const CONFIG = { rate: 35, adaptivePct: 0.20, fixedPrice: 1000, uahRate: 44.25, hoursPerDay: 6 };
+const CONFIG = { rate: 35, adaptivePct: 0.20, adaptiveMinH: 6, fixedPrice: 1000, uahRate: 44.25, hoursPerDay: 6 };
 
 const SECTIONS = [
   { name: "Hero / Веб-концепція", h: 12, desc: "Головний імідж-екран = веб-концепція: лук-енд-філ, типографіка, колір, відчуття анімації (ориентир eplug.memo.ua). Задає візуальний стиль усього сайту. Робимо першою.", tbc: true },
@@ -360,7 +360,7 @@ const fmtUAH = (n) => "₴" + Math.round(n).toLocaleString("uk-UA");
 
 /* ─── Compute ────────────────────────────────────────────────── */
 const designH   = SECTIONS.reduce((a, s) => a + s.h, 0);
-const adaptiveH = Math.round(designH * CONFIG.adaptivePct * 2) / 2;   // rounded to 0.5h
+const adaptiveH = Math.max(CONFIG.adaptiveMinH, Math.round(designH * CONFIG.adaptivePct * 2) / 2);  // floor: мінімум 6 год
 const totalH    = designH + adaptiveH;
 const totalUSD  = CONFIG.fixedPrice;                                   // фіксована ціна
 const designUSD = Math.round(designH / totalH * totalUSD / 10) * 10;   // частка фікс. ціни, заокр. до $10
@@ -391,7 +391,7 @@ html += `<div class="connector"></div>
       <span class="sec__name">Адаптив — планшет + мобільний</span>
       <span class="sec__h">${fmtH(adaptiveH)}<small>год</small></span>
     </div>
-    <div class="sec__desc">Адаптація всіх секцій під планшет і мобільний (${Math.round(CONFIG.adaptivePct * 100)}% від дизайну десктопу).</div>
+    <div class="sec__desc">Адаптація всіх секцій під планшет і мобільний (мінімум ${fmtH(CONFIG.adaptiveMinH)} год).</div>
   </div>`;
 flow.innerHTML = html;
 
@@ -405,7 +405,7 @@ document.getElementById("rollup").innerHTML = `
 /* ─── Breakdown ──────────────────────────────────────────────── */
 document.getElementById("breakdownBody").innerHTML = `
   <tr><td>Дизайн (десктоп)</td><td>${fmtH(designH)}</td><td>${fmtUSD(designUSD)}</td></tr>
-  <tr><td>Адаптив (планшет + мобільний, ${Math.round(CONFIG.adaptivePct * 100)}%)</td><td>${fmtH(adaptiveH)}</td><td>${fmtUSD(adaptUSD)}</td></tr>
+  <tr><td>Адаптив (планшет + мобільний, мін. ${fmtH(CONFIG.adaptiveMinH)} год)</td><td>${fmtH(adaptiveH)}</td><td>${fmtUSD(adaptUSD)}</td></tr>
   <tr class="is-total"><td>Разом</td><td>${fmtH(totalH)} год</td><td>${fmtUSD(totalUSD)}</td></tr>
   <tr class="is-uah"><td>У гривні (курс ${CONFIG.uahRate})</td><td></td><td>${fmtUAH(totalUAH)}</td></tr>`;
 
