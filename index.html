@@ -243,10 +243,9 @@ body {
   window.PREVIEW_PROJECT_NAME = "Школа Нижнього";
   window.PREVIEW_DEFAULT_VERSION = "launcher";
   window.PREVIEW_VERSIONS = [
-    { id: "launcher",   label: "Дашборд",            desc: "Огляд проєкту",              path: "" },
-    { id: "sitemap",    label: "Карта і кошторис",    desc: "Секції, години, вартість",   path: "sitemap/" },
-    { id: "wireframe",  label: "Вайрфрейм",           desc: "Лоу-фай структура лендингу", path: "wireframe/" },
-    { id: "wf-content", label: "Вайрфрейм + контент", desc: "Тексти і CTA по секціях",    path: "wireframe-content/" }
+    { id: "launcher",   label: "Дашборд",          desc: "Огляд проєкту",            path: "" },
+    { id: "sitemap",    label: "Карта і кошторис",  desc: "Секції, години, вартість", path: "sitemap/" },
+    { id: "wf-content", label: "Вайрфрейм",         desc: "Каркас з текстами і CTA",  path: "wireframe-content/" }
   ];
 </script>
 
@@ -307,23 +306,7 @@ body {
       <span class="tile-card__cta">Відкрити карту</span>
     </a>
 
-    <!-- Tile — Wireframe -->
-    <a class="tile-card" href="wireframe/">
-      <span class="tile-card__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M3 9h18M9 9v11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <span class="tile-card__tag">Етап 1 · структура</span>
-      <h2 class="tile-card__title">Вайрфрейм</h2>
-      <p class="tile-card__desc">
-        Лоу-фай каркас лендингу — склад і порядок секцій блоками, без фінального стилю.
-      </p>
-      <span class="tile-card__cta">Відкрити вайрфрейм</span>
-    </a>
-
-    <!-- Tile — Wireframe + content -->
+    <!-- Tile — Wireframe (canvas + content) -->
     <a class="tile-card" href="wireframe-content/">
       <span class="tile-card__icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -331,12 +314,12 @@ body {
           <path d="M3 9h18M9 9v11M12 13h6M12 16.5h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </span>
-      <span class="tile-card__tag">Етап 1 · контент</span>
-      <h2 class="tile-card__title">Вайрфрейм + контент</h2>
+      <span class="tile-card__tag">Етап 1 · структура</span>
+      <h2 class="tile-card__title">Вайрфрейм</h2>
       <p class="tile-card__desc">
-        Каркас із реальними текстами і CTA. Копірайт: GPT-5 + критика Gemini Pro (Consilium), збірка студії.
+        Каркас лендингу з реальними текстами і CTA по всіх секціях. Копірайт — консиліум GPT-5 × Gemini Pro, збірка студії.
       </p>
-      <span class="tile-card__cta">Відкрити з контентом</span>
+      <span class="tile-card__cta">Відкрити вайрфрейм</span>
     </a>
 
     <!-- Tile — Design (planned) -->
