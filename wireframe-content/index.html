@@ -65,6 +65,7 @@ i.tbd{font-style:normal;color:#ffce8a;background:rgba(255,173,51,0.1);border:1px
 .box.plain{background:rgba(255,255,255,0.045);border-style:solid;border-color:rgba(255,255,255,0.12);}
 .logo-box{display:grid;place-items:center;width:120px;height:48px;border:1px dashed var(--box-bd);border-radius:10px;font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.4);}
 .pill{display:inline-flex;align-items:center;height:30px;padding:0 12px;border:1px solid rgba(255,255,255,0.22);border-radius:999px;font-size:12px;font-weight:600;color:var(--txt);}
+.chip{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border:1px solid rgba(159,186,205,0.28);border-radius:999px;font-size:10.5px;font-weight:600;color:var(--brand-blue-light);background:rgba(159,186,205,0.08);}
 .ico{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);flex:0 0 auto;}
 .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.28);}
 .dot.on{background:var(--brand-blue-light);}
@@ -115,64 +116,71 @@ i.tbd{font-style:normal;color:#ffce8a;background:rgba(255,173,51,0.1);border:1px
       <span class="eyebrow">Most of Design · Вайрфрейм + контент</span>
       <h1 class="page-title">Вайрфрейм з контентом</h1>
     </div>
-    <p class="lede">Той самий каркас, але з реальними текстами і CTA. Копірайт: GPT-5 (ведучий) + критика Gemini Pro, фінальна збірка — студія.</p>
+    <p class="lede">Каркас із реальними текстами і CTA. Копірайт: незалежні драфти GPT-5 і Gemini Pro з повного брифу → перехресний обмін → збірка студії.</p>
   </header>
   <div class="note">
     <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.86 1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Жовті блоки <i class="tbd">[у дужках]</i> — факти, які чекаємо від клієнта: назви юнітів, сфера діяльності, контакти, партнери. Решта тексту — робочий копірайт до узгодження.</span>
+    <span>Жовті блоки <i class="tbd">[у дужках]</i> — факти, які чекаємо від клієнта: назви юнітів і їх сайти, сфера, контакти, партнери, соцмережі, юридична назва. Решта — робочий копірайт до узгодження.</span>
   </div>
 </div>
 
 <!-- 01 — Header / Nav -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">01</span> Хедер / Навігація</span>
-  <div class="wf__cap">Лого · 6 якорів · перемикач мов</div>
+  <div class="wf__cap">Лого · 6 якорів · перемикач мов UA | EN</div>
   <div class="wf__frame">
     <div class="row between wrp g16">
       <div class="logo-box">ЛОГО</div>
       <nav class="menu">
-        <span>Напрями</span><span>Події</span><span>Новини</span><span>Медіа</span><span>Партнери</span><span>Контакти</span>
+        <span>Головна</span><span>Бізнес-напрями</span><span>Новини</span><span>Медіа</span><span>Партнери</span><span>Контакти</span>
       </nav>
-      <span class="pill">UA / EN</span>
+      <span class="pill">UA | EN</span>
     </div>
   </div>
 </div></section>
 
 <!-- 02 — Hero -->
 <section class="wf"><div class="wf__inner">
-  <span class="wf__tag"><span class="wf__num">02</span> Hero / Веб-концепція</span>
-  <div class="wf__cap">Слоган · дескриптор · 2 CTA · великий візуал</div>
+  <span class="wf__tag"><span class="wf__num">02</span> Hero / Інтро</span>
+  <div class="wf__cap">Слоган · дескриптор · абзац · 2 CTA · великий візуал / анімація</div>
   <div class="wf__frame">
     <div class="cols2">
       <div class="col g16">
-        <span class="kicker">Зонтичний бренд</span>
-        <h2 class="h1">Школа Нижнього. Структура проєктів, що працюють на довгу дистанцію</h2>
-        <p class="p">«Школа Нижнього» — зонтична інституція, що об'єднує автономні напрями, команди та проєкти у сфері <i class="tbd">[сфера діяльності]</i>. Кожен напрям має власну роль, аудиторію та публічну платформу, залишаючись частиною єдиної організаційної структури.</p>
+        <span class="kicker">Школа Нижнього</span>
+        <h2 class="h1">Об'єднуємо бізнеси. Розвиваємо партнерства. Створюємо майбутнє.</h2>
+        <p class="p">«Школа Нижнього» — навігаційний хаб групи компаній, що об'єднує бізнес-напрями, партнерську мережу, медіаактивність і ключові оновлення в єдиному цифровому просторі.</p>
+        <p class="p dim">Тут можна ознайомитися з портфелем бізнесів, перейти на сайти дочірніх брендів, переглянути новини, медіаматеріали та партнерські зв'язки.</p>
         <div class="row g12 mt10 wrp">
-          <span class="cta cta--fill">Структура проєктів</span>
-          <span class="cta">Ключові події</span>
+          <span class="cta cta--fill">Переглянути бізнес-напрями</span>
+          <span class="cta">Дивитися медіа</span>
         </div>
-        <p class="small mt10">Альтернативні слогани: «Група ініціатив із власною експертизою та спільною структурою» · «Мережа інституцій у сфері <i class="tbd">[сфера]</i>»</p>
+        <p class="small mt10">Альт. слоган: «Об'єднуємо лідерів. Створюємо майбутнє» <i class="tbd">[статус «лідерів» потребує підтвердження]</i></p>
       </div>
       <div class="box" style="aspect-ratio:4/3;min-height:250px;"></div>
     </div>
   </div>
 </div></section>
 
-<!-- 03 — Key events slider -->
+<!-- 03 — Promo / Offer slider -->
 <section class="wf"><div class="wf__inner">
-  <span class="wf__tag"><span class="wf__num">03</span> Промо / Оффер-слайдер</span>
-  <div class="wf__cap">До 4 офферів · авто-ротація · уніфіковані CTA</div>
+  <span class="wf__tag"><span class="wf__num">03</span> Промо / Оффер-слот</span>
+  <div class="wf__cap">Авто-ротація · до 4 промо · кожен слайд веде на сайт дочірнього бренду</div>
   <div class="wf__frame">
-    <h3 class="h2">Ключові події</h3>
+    <div class="row between wrp g16">
+      <div class="col g8">
+        <h3 class="h2">Актуальні напрями</h3>
+        <p class="p dim">Добірка актуальних брендів, проєктів або ініціатив із портфеля «Школи Нижнього». Кожен слайд веде на окремий сайт відповідного бізнесу.</p>
+      </div>
+    </div>
     <div class="row g16 mt18">
       <div class="ico" style="width:44px;height:44px;"></div>
       <div class="card" style="flex:1;flex-direction:row;align-items:center;gap:22px;">
         <div class="box" style="flex:0 0 38%;height:170px;"></div>
         <div class="col g10">
-          <span class="kicker"><i class="tbd">[Назва юніту 1]</i></span>
-          <p class="p"><i class="tbd">[Короткий анонс запуску, події або нового формату в межах напряму.]</i></p>
-          <span class="link">Читати анонс</span>
+          <span class="kicker"><i class="tbd">[Назва дочірнього бренду 1]</i></span>
+          <h4 class="h3"><i class="tbd">[Короткий тизер проєкту або напряму]</i></h4>
+          <p class="p dim"><i class="tbd">[1 речення: що саме представляє цей бренд, проєкт або пропозиція]</i></p>
+          <span class="link link--ext">Детальніше на сайті <i class="tbd">[Бренд 1]</i></span>
         </div>
       </div>
       <div class="ico" style="width:44px;height:44px;"></div>
@@ -180,174 +188,213 @@ i.tbd{font-style:normal;color:#ffce8a;background:rgba(255,173,51,0.1);border:1px
     <div class="row center g8 mt18">
       <span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
-    <p class="small mt14">Інші слайди: <i class="tbd">[Юніт 2]</i> → «Читати новину» · <i class="tbd">[Юніт 3]</i> → «Читати матеріал» · <i class="tbd">[Юніт 4]</i> → «Перейти до події»</p>
+    <p class="small mt14">Автоматична ротація · до 4 промо-матеріалів · оновлюється через CMS</p>
   </div>
 </div></section>
 
 <!-- 04 — Business units -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">04</span> Бізнес-юніти (4–12)</span>
-  <div class="wf__cap">Інтро · картки з роллю · CTA «Сайт [Назва]»</div>
+  <div class="wf__cap">Картка: інтро + атрибути (Сфера / Фокус / Ринок) + лінк на сайт юніту</div>
   <div class="wf__frame">
-    <div class="col g10" style="max-width:680px;">
-      <h3 class="h2">Структура проєктів</h3>
-      <p class="p dim">Структура «Школи Нижнього». <i class="tbd">[X]</i> автономних організацій із власною експертизою, командою та аудиторією.</p>
+    <div class="col g10" style="max-width:720px;">
+      <h3 class="h2">Наш портфель</h3>
+      <p class="p dim">Екосистема «Школи Нижнього» об'єднує самостійні бізнес-напрями з власною експертизою, командою та цифровою присутністю. Кожен юніт представлений рівнозначно та має окремий сайт для детального ознайомлення.</p>
     </div>
     <div class="grid gc2 mt24">
       <div class="card">
         <div class="box" style="height:120px;"></div>
-        <span class="kicker">Роль: <i class="tbd">[Консалтинг]</i></span>
-        <h4 class="h3"><i class="tbd">[Назва юніту 1]</i></h4>
-        <p class="p dim">Напрям працює з <i class="tbd">[цільова аудиторія]</i> у питаннях <i class="tbd">[сфера задач]</i>, допомагаючи структурувати рішення, процеси та довгострокові програми. Фокус — прикладна експертиза, аналітична точність і супровід складних проєктів.</p>
-        <span class="link link--ext">Сайт <i class="tbd">[Назва юніту 1]</i></span>
+        <h4 class="h3"><i class="tbd">[Назва бізнес-юніту 1]</i></h4>
+        <p class="p dim"><i class="tbd">[1–2 речення про напрям, роль або спеціалізацію бізнес-юніту]</i></p>
+        <div class="row wrp g6">
+          <span class="chip">Сфера: <i class="tbd">[галузь]</i></span>
+          <span class="chip">Фокус: <i class="tbd">[особливість]</i></span>
+          <span class="chip">Ринок: <i class="tbd">[сегмент]</i></span>
+        </div>
+        <span class="link link--ext">Відвідати сайт <i class="tbd">[Юніт 1]</i></span>
       </div>
       <div class="card">
         <div class="box" style="height:120px;"></div>
-        <span class="kicker">Роль: <i class="tbd">[Аналітичний центр]</i></span>
-        <h4 class="h3"><i class="tbd">[Назва юніту 2]</i></h4>
-        <p class="p dim">Напрям готує дослідження, огляди та позиційні матеріали у сфері <i class="tbd">[сфера діяльності]</i>. Завдання — формувати доказову базу для рішень, публічних дискусій і стратегічних ініціатив.</p>
-        <span class="link link--ext">Сайт <i class="tbd">[Назва юніту 2]</i></span>
+        <h4 class="h3"><i class="tbd">[Назва бізнес-юніту 2]</i></h4>
+        <p class="p dim"><i class="tbd">[1–2 речення про напрям, роль або спеціалізацію бізнес-юніту]</i></p>
+        <div class="row wrp g6">
+          <span class="chip">Сфера: <i class="tbd">[галузь]</i></span>
+          <span class="chip">Фокус: <i class="tbd">[особливість]</i></span>
+          <span class="chip">Ринок: <i class="tbd">[сегмент]</i></span>
+        </div>
+        <span class="link link--ext">Відвідати сайт <i class="tbd">[Юніт 2]</i></span>
       </div>
       <div class="card">
         <div class="box" style="height:120px;"></div>
-        <span class="kicker">Роль: <i class="tbd">[Тренінгова база]</i></span>
-        <h4 class="h3"><i class="tbd">[Назва юніту 3]</i></h4>
-        <p class="p dim">Напрям відповідає за підготовку, практичні формати та розвиток компетенцій для <i class="tbd">[цільова група]</i>. Програми будуються навколо реальних задач, дисципліни виконання та вимірюваного прогресу.</p>
-        <span class="link link--ext">Сайт <i class="tbd">[Назва юніту 3]</i></span>
+        <h4 class="h3"><i class="tbd">[Назва бізнес-юніту 3]</i></h4>
+        <p class="p dim"><i class="tbd">[1–2 речення про напрям, роль або спеціалізацію бізнес-юніту]</i></p>
+        <div class="row wrp g6">
+          <span class="chip">Сфера: <i class="tbd">[галузь]</i></span>
+          <span class="chip">Фокус: <i class="tbd">[особливість]</i></span>
+          <span class="chip">Ринок: <i class="tbd">[сегмент]</i></span>
+        </div>
+        <span class="link link--ext">Відвідати сайт <i class="tbd">[Юніт 3]</i></span>
       </div>
       <div class="card">
         <div class="box" style="height:120px;"></div>
-        <span class="kicker">Роль: <i class="tbd">[Медіаплатформа]</i></span>
-        <h4 class="h3"><i class="tbd">[Назва юніту 4]</i></h4>
-        <p class="p dim">Платформа висвітлює ключові теми, публічні позиції, інтерв'ю та матеріали експертів мережі. Функція — прозора комунікація та відкритий доступ до змісту окремих напрямів.</p>
-        <span class="link link--ext">Сайт <i class="tbd">[Назва юніту 4]</i></span>
+        <h4 class="h3"><i class="tbd">[Назва бізнес-юніту 4]</i></h4>
+        <p class="p dim"><i class="tbd">[1–2 речення про напрям, роль або спеціалізацію бізнес-юніту]</i></p>
+        <div class="row wrp g6">
+          <span class="chip">Сфера: <i class="tbd">[галузь]</i></span>
+          <span class="chip">Фокус: <i class="tbd">[особливість]</i></span>
+          <span class="chip">Ринок: <i class="tbd">[сегмент]</i></span>
+        </div>
+        <span class="link link--ext">Відвідати сайт <i class="tbd">[Юніт 4]</i></span>
       </div>
     </div>
-    <p class="small mt14">Сітка масштабується до 12 юнітів — картки рівнозначні, без виділення головного.</p>
+    <p class="small mt14">Поточна кількість: <i class="tbd">[4]</i> · архітектура до <i class="tbd">[12]</i> · картки рівнозначні, порядок редагується через CMS</p>
   </div>
 </div></section>
 
 <!-- 05 — News -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">05</span> Новини · анонсний блок</span>
-  <div class="wf__cap">Фото + абзац + лінк на джерело (повна новина — на сайті юніту)</div>
+  <div class="wf__cap">Дата + ярлик бренду + витяг · повна публікація на сайті дочірнього бренду</div>
   <div class="wf__frame">
-    <h3 class="h2">Новини</h3>
+    <div class="col g8" style="max-width:720px;">
+      <h3 class="h2">Новини екосистеми</h3>
+      <p class="p dim">Ключові події, оновлення та публікації з сайтів дочірніх бізнесів «Школи Нижнього».</p>
+    </div>
     <div class="grid gc3 mt18">
       <div class="card">
         <div class="box" style="height:130px;"></div>
-        <h4 class="h3"><i class="tbd">[Назва юніту]</i> запускає <i class="tbd">[назва формату]</i></h4>
-        <p class="p dim"><i class="tbd">[Короткий опис: для кого створено формат, яку задачу він закриває та як пов'язаний із роботою напряму.]</i></p>
-        <span class="link link--ext">Читати новину</span>
+        <div class="row g8"><span class="chip"><i class="tbd">[ДД.ММ.РРРР]</i></span><span class="chip"><i class="tbd">[Бренд]</i></span></div>
+        <h4 class="h3"><i class="tbd">[Заголовок новини]</i></h4>
+        <p class="p dim"><i class="tbd">[Витяг 150–200 символів: суть події без дублювання повної публікації]</i></p>
+        <span class="link link--ext">Читати повністю на сайті <i class="tbd">[Бренду]</i></span>
       </div>
       <div class="card">
         <div class="box" style="height:130px;"></div>
+        <div class="row g8"><span class="chip"><i class="tbd">[ДД.ММ.РРРР]</i></span><span class="chip"><i class="tbd">[Бренд]</i></span></div>
         <h4 class="h3"><i class="tbd">[Заголовок новини]</i></h4>
-        <p class="p dim"><i class="tbd">[2–3 речення: що сталося, хто залучений, до якого напряму належить і чому це важливо.]</i></p>
-        <span class="link link--ext">Читати новину</span>
+        <p class="p dim"><i class="tbd">[Витяг 150–200 символів: суть події без дублювання повної публікації]</i></p>
+        <span class="link link--ext">Читати повністю на сайті <i class="tbd">[Бренду]</i></span>
       </div>
       <div class="card">
         <div class="box" style="height:130px;"></div>
+        <div class="row g8"><span class="chip"><i class="tbd">[ДД.ММ.РРРР]</i></span><span class="chip"><i class="tbd">[Бренд]</i></span></div>
         <h4 class="h3"><i class="tbd">[Заголовок новини]</i></h4>
-        <p class="p dim"><i class="tbd">[2–3 речення: що сталося, хто залучений, до якого напряму належить і чому це важливо.]</i></p>
-        <span class="link link--ext">Читати новину</span>
+        <p class="p dim"><i class="tbd">[Витяг 150–200 символів: суть події без дублювання повної публікації]</i></p>
+        <span class="link link--ext">Читати повністю на сайті <i class="tbd">[Бренду]</i></span>
       </div>
     </div>
+    <p class="small mt14">Новини додаються вручну через CMS · порожній стан: «Новини готуються до публікації»</p>
   </div>
 </div></section>
 
 <!-- 06 — Media / YouTube -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">06</span> Медіа / YouTube</span>
-  <div class="wf__cap">Кастомні рамки · клік → YouTube</div>
+  <div class="wf__cap">Кастомна «рамка-конверт» · hover-мікрокопі · клік → YouTube</div>
   <div class="wf__frame">
     <div class="row between wrp g16">
       <div class="col g8">
-        <h3 class="h2">Медіа</h3>
-        <p class="p dim">Публічні виступи, інтерв'ю та аналітика експертів мережі.</p>
+        <h3 class="h2">Медіацентр</h3>
+        <p class="p dim">Відеоматеріали з YouTube-каналу «Школи Нижнього»: інтерв'ю, події, огляди проєктів, експертні матеріали та інші публічні виступи.</p>
       </div>
-      <span class="cta cta--ext">Перейти на YouTube</span>
+      <span class="cta cta--ext">Дивитися на YouTube</span>
     </div>
     <div class="grid gc3 mt18">
-      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися виступ</span></div>
-      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися виступ</span></div>
-      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися виступ</span></div>
+      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися на YouTube</span></div>
+      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися на YouTube</span></div>
+      <div class="col g10"><div class="frame2"><div class="box play" style="height:150px;"></div></div><span class="link link--ext">Дивитися на YouTube</span></div>
     </div>
+    <p class="small mt14">Hover: «Відкрити відео на YouTube» · відео відкривається на YouTube · канал <i class="tbd">[URL уточнюється]</i></p>
   </div>
 </div></section>
 
 <!-- 07 — Partners -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">07</span> Партнери</span>
-  <div class="wf__cap">3 категорії · логотипи без підводки</div>
+  <div class="wf__cap">3 категорії з описами · логотип + назва + опис + лінк (опц.)</div>
   <div class="wf__frame col g20">
-    <h3 class="h2">Партнери</h3>
+    <div class="col g8" style="max-width:760px;">
+      <h3 class="h2">Надійні партнерства</h3>
+      <p class="p dim">Партнерська мережа «Школи Нижнього» об'єднує міжнародні, національні та комерційні організації, що посилюють довіру до бренду, розширюють його можливості та демонструють масштаб екосистеми.</p>
+    </div>
     <div class="col g12">
-      <span class="kicker">Міжнародні</span>
+      <span class="kicker">Міжнародні партнери</span>
+      <p class="small">Організації та інституції, що представляють міжнародний рівень співпраці.</p>
       <div class="row wrp g16">
         <div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div>
       </div>
     </div>
     <div class="col g12">
       <span class="kicker">Національні інституції</span>
+      <p class="small">Партнери, що представляють національний, галузевий або інституційний рівень взаємодії.</p>
       <div class="row wrp g16">
         <div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div>
       </div>
     </div>
     <div class="col g12">
-      <span class="kicker">Комерційні</span>
+      <span class="kicker">Комерційні партнери</span>
+      <p class="small">Компанії та бізнес-організації, з якими «Школа Нижнього» розвиває спільні проєкти, сервіси або ініціативи.</p>
       <div class="row wrp g16">
         <div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div><div class="box plain" style="width:120px;height:54px;"></div>
       </div>
     </div>
-    <p class="small">Кількість логотипів у категоріях — <i class="tbd">[уточнюється]</i>; впливає на сітку.</p>
+    <p class="small">CTA картки: «Сайт партнера» (за наявності) · кількість у категоріях — <i class="tbd">[уточнюється]</i> · можливість приховати без видалення — <i class="tbd">[потребує підтвердження]</i></p>
   </div>
 </div></section>
 
 <!-- 08 — Contacts -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">08</span> Контакти</span>
-  <div class="wf__cap">Інформаційний блок · email за цілями · без форми лідів</div>
+  <div class="wf__cap">Інформаційний блок · без форми лідів · карта на уточненні</div>
   <div class="wf__frame">
     <div class="cols2">
-      <div class="col g14" style="gap:14px;">
-        <h3 class="h2">Контакти</h3>
-        <p class="p dim">Зв'язок із центральним офісом. Для питань щодо конкретних ініціатив — контакти на сайтах відповідних проєктів.</p>
+      <div class="col" style="gap:14px;">
+        <h3 class="h2">Контакти центрального офісу</h3>
+        <p class="p dim">Офіційна контактна інформація «Школи Нижнього» для партнерів, інвесторів, медіа та інших зацікавлених сторін.</p>
         <div class="col g8 mt6">
-          <p class="p">Адреса: <i class="tbd">[країна, місто, адреса]</i></p>
-          <p class="p">Телефон: <i class="tbd">[номер телефону]</i></p>
-          <p class="p">Медіа: <i class="tbd">[media@…]</i> · Партнерство: <i class="tbd">[partners@…]</i> · Загальні: <i class="tbd">[info@…]</i></p>
+          <p class="p">Адреса: <i class="tbd">[адреса]</i></p>
+          <p class="p">Телефон: <i class="tbd">[телефон]</i></p>
+          <p class="p">Email: <i class="tbd">[email]</i></p>
         </div>
-        <span class="cta mt10" style="align-self:flex-start;">Написати до центрального офісу</span>
+        <div class="row g12 mt10 wrp">
+          <span class="cta cta--fill">Написати email</span>
+          <span class="cta">Зателефонувати</span>
+        </div>
       </div>
       <div class="box" style="height:230px;"></div>
     </div>
-    <p class="small mt14">Карта — <i class="tbd">[так / ні, уточнюється]</i>.</p>
+    <p class="small mt14">Форма зворотного зв'язку не передбачена · блок має інформаційний характер · карта — <i class="tbd">[так/ні, уточнюється]</i></p>
   </div>
 </div></section>
 
 <!-- 09 — Footer -->
 <section class="wf"><div class="wf__inner">
   <span class="wf__tag"><span class="wf__num">09</span> Футер</span>
-  <div class="wf__cap">Місія · юридичні файли · копірайт · соцмережі</div>
+  <div class="wf__cap">Опис-хаб · навігація · соцмережі · юридичні файли · копірайт</div>
   <div class="wf__frame col g20">
-    <div class="row between wrp g20">
-      <div class="col g12" style="max-width:520px;">
+    <div class="row between wrp g20" style="align-items:flex-start;">
+      <div class="col g12" style="max-width:440px;">
         <div class="logo-box">ЛОГО</div>
-        <p class="p dim">«Школа Нижнього» об'єднує автономні ініціативи в єдину інституційну структуру з довгостроковою відповідальністю.</p>
+        <p class="p dim">«Школа Нижнього» — корпоративний навігаційний хаб для бізнес-напрямів, партнерської мережі, медіаактивності та ключових оновлень групи.</p>
+      </div>
+      <div class="col g8">
+        <span class="kicker">Навігація</span>
+        <span class="small">Головна · Бізнес-напрями · Новини</span>
+        <span class="small">Медіа · Партнери · Контакти</span>
       </div>
       <div class="col g8">
         <span class="kicker">Документи</span>
         <span class="small">Політика конфіденційності</span>
         <span class="small">Умови використання</span>
-        <span class="small">Правова інформація</span>
-        <span class="small">Медіа та бренд-матеріали</span>
+        <span class="small"><i class="tbd">[Інші юридичні документи]</i></span>
       </div>
     </div>
     <div class="divider"></div>
     <div class="row between wrp g16">
-      <span class="small">© <i class="tbd">[рік]</i> Школа Нижнього. Усі права захищені.</span>
-      <div class="row g10"><span class="ico"></span><span class="ico"></span><span class="ico"></span></div>
+      <span class="small">© <i class="tbd">[Рік]</i> <i class="tbd">[Повна юридична назва]</i>. Усі права захищено. Відтворення матеріалів лише за згодою власника.</span>
+      <div class="row g8 wrp">
+        <span class="chip"><i class="tbd">[LinkedIn]</i></span><span class="chip"><i class="tbd">[YouTube]</i></span><span class="chip"><i class="tbd">[X]</i></span><span class="chip"><i class="tbd">[Facebook]</i></span><span class="chip"><i class="tbd">[Instagram]</i></span>
+      </div>
     </div>
   </div>
 </div></section>
