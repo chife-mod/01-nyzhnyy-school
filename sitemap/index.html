@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Імідж-сайт — Карта сайту і кошторис</title>
+
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<link rel="stylesheet" href="../shared/service-menu.css">
+
+<style>
+:root {
+  --brand-blue:       #116490;
+  --brand-blue-light: #9FBACD;
+  --bg-top:    #0a1219;
+  --bg-bottom: #1e2a35;
+  --charcoal:  #1e2a35;
+  --white:     #fff;
+  --accent:    #4B6CFF;
+  --line:      rgba(159, 186, 205, 0.3);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+}
+
+.wrap {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 32px 16px;
+}
+
+/* brand logo — sticky top bar on every page, click → main dashboard */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  padding: 0 max(32px, calc(50vw - 508px)) 16px;
+  background: rgba(10, 18, 25, 0.82);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.brand { display: inline-block; height: 53px; }
+.brand img { display: block; height: 100%; width: auto; }
+
+.eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--brand-blue-light); margin-bottom: 16px;
+}
+
+/* 2-column header: title left, description right */
+.head { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: end; }
+@media (max-width: 760px) { .head { grid-template-columns: 1fr; gap: 14px; align-items: start; } }
+
+.page-title {
+  font-size: clamp(30px, 4.5vw, 46px); font-weight: 700;
+  letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 0;
+}
+
+.lede {
+  font-size: 14px; line-height: 1.55;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.section-title {
+  font-size: 13px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.45); margin-bottom: 20px;
+}
+
+/* ─── Legend ─────────────────────────────────────────────────── */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  margin-top: 22px; font-size: 12px; color: rgba(255,255,255,0.5);
+}
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i {
+  font-style: normal; font-size: 9px; font-weight: 600; letter-spacing: 0.06em;
+  padding: 2px 6px; border-radius: 4px;
+}
+.b-tbc  { color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.3); }
+.b-adp  { color: #e0b3ff; background: rgba(168,85,247,0.14); border: 1px solid rgba(168,85,247,0.4); }
+
+/* ─── Vertical page flow (one-page landing, scroll order) ─────── */
+.flow-hint {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.4); margin: 28px 0 4px;
+}
+.flow-hint svg { width: 15px; height: 15px; }
+
+.flow {
+  display: flex; flex-direction: column; align-items: center;
+  margin-top: 12px;
+}
+
+.sec {
+  width: 100%; max-width: 560px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px; padding: 16px 18px 15px;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.sec:hover { border-color: rgba(159,186,205,0.32); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+
+.sec__top { display: flex; align-items: center; gap: 12px; }
+.sec__num {
+  flex-shrink: 0; width: 30px; height: 30px; display: grid; place-items: center;
+  background: rgba(159, 186, 205, 0.12); border: 1px solid rgba(159, 186, 205, 0.24);
+  border-radius: 8px; font-size: 13px; font-weight: 700; color: var(--brand-blue-light);
+  font-variant-numeric: tabular-nums;
+}
+.sec__name { flex: 1; min-width: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.sec__h {
+  flex-shrink: 0; display: inline-flex; align-items: baseline; gap: 3px;
+  padding: 4px 10px; background: rgba(159, 186, 205, 0.12);
+  border: 1px solid rgba(159, 186, 205, 0.22); border-radius: 999px;
+  font-size: 13px; font-weight: 700; color: var(--brand-blue-light); font-variant-numeric: tabular-nums;
+}
+.sec__h small { font-size: 9.5px; font-weight: 500; opacity: 0.7; }
+.sec__desc { font-size: 12.5px; line-height: 1.45; color: rgba(255, 255, 255, 0.5); margin: 10px 0 0; padding-left: 42px; }
+.sec__tbc {
+  display: inline-block; margin-left: 8px; vertical-align: middle;
+  font-size: 8.5px; font-weight: 600; letter-spacing: 0.06em;
+  color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.3);
+  padding: 1px 6px; border-radius: 4px;
+}
+
+/* adaptive card — distinct accent */
+.sec.is-adaptive { border-color: rgba(168,85,247,0.32); background: rgba(168,85,247,0.05); }
+.sec.is-adaptive .sec__num { color: #e0b3ff; background: rgba(168,85,247,0.16); border-color: rgba(168,85,247,0.4); }
+.sec.is-adaptive .sec__h  { color: #e0b3ff; background: rgba(168,85,247,0.16); border-color: rgba(168,85,247,0.4); }
+
+.connector { width: 2px; height: 22px; background: var(--line); }
+
+/* ─── Rollup stat strip ──────────────────────────────────────── */
+.rollup {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px; background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px; overflow: hidden; margin-top: 4px;
+}
+.stat { background: linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%); padding: 22px 20px; }
+.stat--accent { background: linear-gradient(180deg, rgba(75,108,255,0.16) 0%, rgba(75,108,255,0.06) 100%); }
+.stat__label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.45); margin-bottom: 10px; }
+.stat__value { font-size: 25px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; line-height: 1; }
+.stat--accent .stat__value { color: #c3cdff; }
+
+/* ─── Estimate breakdown ─────────────────────────────────────── */
+.estimate { margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.breakdown__table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; margin-top: 24px; }
+.breakdown__table th, .breakdown__table td { text-align: right; padding: 12px 16px; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.breakdown__table th:first-child, .breakdown__table td:first-child { text-align: left; color: rgba(255,255,255,0.7); }
+.breakdown__table thead th { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.4); }
+.breakdown__table tr.is-total td { font-weight: 700; font-size: 16px; border-bottom: none; border-top: 2px solid rgba(255, 255, 255, 0.16); padding-top: 16px; }
+.breakdown__table tr.is-total td:last-child { color: #c3cdff; font-size: 28px; white-space: nowrap; }
+.breakdown__table tr.is-uah td { color: rgba(255,255,255,0.55); font-size: 13px; border-bottom: none; padding-top: 6px; padding-bottom: 2px; }
+.breakdown__table tr.is-uah td:last-child { color: rgba(255,255,255,0.75); font-weight: 600; }
+.breakdown__note { margin-top: 18px; font-size: 12px; color: rgba(255, 255, 255, 0.4); line-height: 1.5; }
+
+/* ─── Stages ─────────────────────────────────────────────────── */
+.stages-wrap { margin-top: 44px; }
+.stages { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.stage-card { padding: 18px 18px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+.stage-card__n { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-blue-light); }
+.stage-card__due { font-size: 9px; font-weight: 600; letter-spacing: 0.05em; color: #ffce8a; background: rgba(255,173,51,0.12); border: 1px solid rgba(255,173,51,0.35); border-radius: 4px; padding: 2px 6px; text-transform: none; }
+.stage-card__t { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin: 10px 0 6px; }
+.stage-card__d { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.5); }
+
+/* ─── Notice ─────────────────────────────────────────────────── */
+.notice {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 18px;
+  background: rgba(255, 173, 51, 0.08);
+  border: 1px solid rgba(255, 173, 51, 0.28);
+  border-radius: 10px;
+  font-size: 13px; line-height: 1.5;
+  color: rgba(255, 220, 170, 0.92);
+  margin: 44px 0 0;
+}
+.notice strong { color: #ffce8a; font-weight: 600; }
+.notice svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; color: #ffce8a; }
+
+/* ─── References / About ─────────────────────────────────────── */
+.refs { margin-top: 8px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+.refs__about { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.62); max-width: 780px; margin-bottom: 26px; }
+.refs__about strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+.refs__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(248px, 1fr)); gap: 12px; }
+.ref-card { display: flex; flex-direction: column; padding: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-decoration: none; color: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease; }
+a.ref-card:hover { border-color: rgba(159,186,205,0.3); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+.ref-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ref-card__name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.ref-card__ext { font-size: 13px; color: rgba(255,255,255,0.4); }
+.ref-card__desc { font-size: 12.5px; line-height: 1.45; color: rgba(255,255,255,0.55); margin: 8px 0 14px; flex: 1; }
+.ref-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ref-card__tags span { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 999px; color: var(--brand-blue-light); background: rgba(159,186,205,0.12); border: 1px solid rgba(159,186,205,0.22); }
+
+.footer-pad { height: 120px; }
+</style>
+</head>
+<body>
+
+<script>
+  window.PREVIEW_PROJECT_NAME = "Імідж-сайт";
+  window.PREVIEW_DEFAULT_VERSION = "sitemap";
+  window.PREVIEW_VERSIONS = [
+    { id: "launcher", label: "Дашборд",            desc: "Огляд проєкту",            path: "../" },
+    { id: "sitemap",  label: "Карта і кошторис",    desc: "Секції, години, вартість", path: "" }
+  ];
+</script>
+
+<header class="topbar">
+  <a class="brand" href="../" aria-label="Most of Design — Dashboard">
+    <img src="../assets/mod-logo-on-dark.svg" alt="Most of Design">
+  </a>
+</header>
+
+<div class="wrap">
+  <header class="head">
+    <div class="head__main">
+      <span class="eyebrow">Most of Design · Попередній кошторис</span>
+      <h1 class="page-title">Карта сайту і кошторис</h1>
+    </div>
+    <p class="lede">
+      Імідж-лендинг зонтичного бренду, складено з брифу. Один екран = одна секція, зверху вниз
+      по скролу. На кожній — фіксовані години дизайну. Підсумок — кошторис на дизайн + адаптив.
+    </p>
+  </header>
+
+  <div class="legend">
+    <span><i class="b-tbc">TBC</i> потребує уточнення (блокер з брифу)</span>
+    <span><i class="b-adp">АДАПТИВ</i> планшет + мобільний</span>
+  </div>
+
+  <div class="flow-hint">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Порядок секцій на лендингу — фіналізується на етапі дизайну
+  </div>
+</div>
+
+<!-- SITEMAP (vertical page flow) -->
+<div class="wrap"><div class="flow" id="flow"></div></div>
+
+<!-- ESTIMATE -->
+<div class="wrap estimate">
+  <h2 class="section-title">Кошторис · фіксований</h2>
+
+  <div class="rollup" id="rollup"></div>
+
+  <table class="breakdown__table">
+    <thead><tr><th>Рядок</th><th>Години</th><th>Сума</th></tr></thead>
+    <tbody id="breakdownBody"></tbody>
+  </table>
+
+  <p class="breakdown__note" id="breakdownNote"></p>
+</div>
+
+<!-- STAGES -->
+<div class="wrap stages-wrap">
+  <h2 class="section-title">Етапи</h2>
+  <div class="stages">
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 1 <span class="stage-card__due">до середи 17.06</span></span>
+      <div class="stage-card__t">Структура + вайрфрейми</div>
+      <div class="stage-card__d">Карта сайту → на її базі швидкий вайрфрейм з реальним контентом. Узгоджуємо обсяг і порядок секцій.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 2</span>
+      <div class="stage-card__t">Концепція</div>
+      <div class="stage-card__d">Візуальний напрямок на прикладі головного екрану (Hero): лук-енд-філ, типографіка, колір, відчуття анімації.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 3</span>
+      <div class="stage-card__t">Дизайн секцій</div>
+      <div class="stage-card__d">Решта секцій лендингу на десктопі за затвердженою концепцією.</div>
+    </div>
+    <div class="stage-card">
+      <span class="stage-card__n">Етап 4</span>
+      <div class="stage-card__t">Адаптив</div>
+      <div class="stage-card__d">Планшет і мобільний для всіх секцій. Desktop First, але мобільна версія — обовʼязково зручна.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="wrap">
+  <div class="notice">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.86 1.82 18a2 2 0 0 0 1.7 3h16.96a2 2 0 0 0 1.7-3L13.7 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><strong>Фіксований кошторис</strong> — лише <strong>дизайн + адаптив</strong> (ставка $35/год). Не входять: верстка/розробка, CMS-інтеграція (WordPress), продакшн анімації та генерація відео, правки понад узгоджене і менеджмент. Фіналізується після затвердження повної структури секцій. Пункти <strong>TBC</strong> (Hero, YouTube, партнери, карта) можуть зрушити обсяг — закриваємо їх до старту дизайну.</span>
+  </div>
+</div>
+
+<!-- REFERENCES -->
+<div class="wrap refs">
+  <h2 class="section-title">Референси</h2>
+  <p class="refs__about">
+    <strong>Most of Design — продакт-дизайнер, понад 25 років досвіду.</strong> Повний спектр дизайну та візуалізації — від ідеї до реалізації. 3D- і 2D-анімація, інтерфейсний дизайн, пітч-деки, розробка брендів. Сертифікований спеціаліст Autodesk.
+  </p>
+  <div class="refs__grid">
+    <a class="ref-card" href="https://tabasco.com.ua/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Tabasco</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Дизайн і реалізація під ключ.</div>
+      <div class="ref-card__tags"><span>Дизайн</span><span>Реалізація під ключ</span></div>
+    </a>
+    <a class="ref-card" href="https://adapwork.com/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Adapwork</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">CAD-моделі з заводу → точна 3D-анімація. Зв'язка 3D-рендер + постпродакшн.</div>
+      <div class="ref-card__tags"><span>Продуктовий дизайн</span><span>3D-анімація</span></div>
+    </a>
+    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-2/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 2</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи.</div>
+      <div class="ref-card__tags"><span>Веб-концепція</span><span>Прототипи</span></div>
+    </a>
+    <a class="ref-card" href="https://chife-mod.github.io/verifly-web/concept-1/" target="_blank" rel="noopener">
+      <div class="ref-card__head"><span class="ref-card__name">Verifly · Концепт 1</span><span class="ref-card__ext">↗</span></div>
+      <div class="ref-card__desc">Концепція сайту + інтерактивні прототипи.</div>
+      <div class="ref-card__tags"><span>Веб-концепція</span><span>Прототипи</span></div>
+    </a>
+  </div>
+</div>
+<div class="footer-pad"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SINGLE SOURCE OF TRUTH — Imagehub one-page landing (from brief).
+   Section = { name, desc, h, tbc? }. Hours are FIXED (no min/max).
+   Adaptive (tablet+mobile) is computed as % of design base.
+   Edit numbers here → everything (cards, rollup, totals) updates.
+   ─────────────────────────────────────────────────────────────── */
+const CONFIG = { rate: 35, adaptivePct: 0.20, uahRate: 44.25, fopMult: 1.06, hoursPerDay: 6 };
+
+const SECTIONS = [
+  { name: "Хедер / Навігація", h: 2,   desc: "Лого, меню з якорями, перемикач мов UA / EN." },
+  { name: "Hero / Інтро",      h: 8,   desc: "Головний імідж-екран бренду: слоган, дескриптор, відчуття анімації (ориентир eplug.memo.ua).", tbc: true },
+  { name: "Промо / Оффер-слайдер", h: 2, desc: "Авто-ротований слайдер до 4 офферів (зображення + марка + лінк на бренд)." },
+  { name: "Бізнес-юніти (4–12)", h: 3, desc: "Картки дочірніх бізнесів. Масштабована сітка/карусель — рівнозначно при 4 і при 12." },
+  { name: "Новини",            h: 1.5, desc: "Картка: фото + абзац + лінк на джерело." },
+  { name: "Медіа / YouTube",   h: 2,   desc: "Останні відео в кастомних рамках-«конверт», клік → YouTube.", tbc: true },
+  { name: "Партнери",          h: 2,   desc: "3 категорії: міжнародні / національні / комерційні. Логотип + опис.", tbc: true },
+  { name: "Контакти",          h: 1.5, desc: "Адреса, телефон, email. Інформаційний блок (не форма лідів). Карта — TBC.", tbc: true },
+  { name: "Футер",             h: 1.5, desc: "Копірайт, лінки, юридичні файли, соцмережі." },
+];
+
+/* ─── Helpers ────────────────────────────────────────────────── */
+const fmtH   = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+const fmtUSD = (n) => "$" + Math.round(n).toLocaleString("en-US");
+const fmtUAH = (n) => "₴" + Math.round(n).toLocaleString("uk-UA");
+
+/* ─── Compute ────────────────────────────────────────────────── */
+const designH   = SECTIONS.reduce((a, s) => a + s.h, 0);
+const adaptiveH = Math.round(designH * CONFIG.adaptivePct * 2) / 2;   // rounded to 0.5h
+const totalH    = designH + adaptiveH;
+const designUSD = designH * CONFIG.rate;
+const adaptUSD  = adaptiveH * CONFIG.rate;
+const totalUSD  = totalH * CONFIG.rate;
+const totalUAH  = totalUSD * CONFIG.uahRate;
+const totalFOP  = totalUAH * CONFIG.fopMult;
+const days      = Math.ceil(totalH / CONFIG.hoursPerDay);
+
+/* ─── Render page flow ───────────────────────────────────────── */
+const flow = document.getElementById("flow");
+let html = "";
+SECTIONS.forEach((s, i) => {
+  if (i) html += `<div class="connector"></div>`;
+  html += `
+    <div class="sec">
+      <div class="sec__top">
+        <span class="sec__num">${String(i + 1).padStart(2, "0")}</span>
+        <span class="sec__name">${s.name}${s.tbc ? `<span class="sec__tbc">TBC</span>` : ""}</span>
+        <span class="sec__h">${fmtH(s.h)}<small>год</small></span>
+      </div>
+      <div class="sec__desc">${s.desc}</div>
+    </div>`;
+});
+// adaptive card
+html += `<div class="connector"></div>
+  <div class="sec is-adaptive">
+    <div class="sec__top">
+      <span class="sec__num">A</span>
+      <span class="sec__name">Адаптив — планшет + мобільний</span>
+      <span class="sec__h">${fmtH(adaptiveH)}<small>год</small></span>
+    </div>
+    <div class="sec__desc">Адаптація всіх секцій під планшет і мобільний (${Math.round(CONFIG.adaptivePct * 100)}% від дизайну десктопу).</div>
+  </div>`;
+flow.innerHTML = html;
+
+/* ─── Rollup ─────────────────────────────────────────────────── */
+document.getElementById("rollup").innerHTML = `
+  <div class="stat"><div class="stat__label">Секцій</div><div class="stat__value">${SECTIONS.length}</div></div>
+  <div class="stat"><div class="stat__label">Години</div><div class="stat__value">${fmtH(totalH)}</div></div>
+  <div class="stat"><div class="stat__label">Робочі дні</div><div class="stat__value">${days}</div></div>
+  <div class="stat stat--accent"><div class="stat__label">Разом</div><div class="stat__value">${fmtUSD(totalUSD)}</div></div>`;
+
+/* ─── Breakdown ──────────────────────────────────────────────── */
+document.getElementById("breakdownBody").innerHTML = `
+  <tr><td>Дизайн (десктоп)</td><td>${fmtH(designH)}</td><td>${fmtUSD(designUSD)}</td></tr>
+  <tr><td>Адаптив (планшет + мобільний, ${Math.round(CONFIG.adaptivePct * 100)}%)</td><td>${fmtH(adaptiveH)}</td><td>${fmtUSD(adaptUSD)}</td></tr>
+  <tr class="is-total"><td>Разом</td><td>${fmtH(totalH)} год</td><td>${fmtUSD(totalUSD)}</td></tr>
+  <tr class="is-uah"><td>У гривні (курс ${CONFIG.uahRate})</td><td></td><td>${fmtUAH(totalUAH)}</td></tr>
+  <tr class="is-uah"><td>З ФОП +${Math.round((CONFIG.fopMult - 1) * 100)}%</td><td></td><td>${fmtUAH(totalFOP)}</td></tr>`;
+
+document.getElementById("breakdownNote").textContent =
+  `Ставка $${CONFIG.rate}/год · робочі дні з розрахунку ${CONFIG.hoursPerDay} год/день (лише продакшн, без менеджменту і правок). Курс і ФОП — орієнтовні, фіналізуються в договорі.`;
+</script>
+
+<script defer src="../shared/service-menu.js"></script>
+</body>
+</html>
