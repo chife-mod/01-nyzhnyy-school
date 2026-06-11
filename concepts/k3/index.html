@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>К3 · Жива структура — Школа Нижнього</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{ --bg0:#05080F; --bg1:#0B1322; --fg:#EAF1F8; --dim:rgba(234,241,248,0.6); --acc:#5AC8FA; --acc2:#7B8CFF; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Space Grotesk','Inter',sans-serif;background:radial-gradient(120% 120% at 70% 30%,var(--bg1) 0%,var(--bg0) 60%);color:var(--fg);-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+.concept-bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99;display:flex;gap:6px;background:rgba(234,241,248,0.94);padding:6px;border-radius:999px;}
+.concept-bar a{font-size:11px;font-weight:600;letter-spacing:0.06em;color:#05080F;text-decoration:none;padding:6px 14px;border-radius:999px;opacity:0.55;}
+.concept-bar a.on{background:#05080F;color:#fff;opacity:1;}
+.concept-bar a:hover{opacity:1;}
+
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;}
+
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;}
+.logo{display:flex;align-items:center;gap:12px;color:var(--fg);text-decoration:none;}
+.logo__mark{width:38px;height:38px;border:1.5px solid var(--acc);color:var(--acc);display:grid;place-items:center;font-weight:700;font-size:17px;border-radius:10px;box-shadow:0 0 18px rgba(90,200,250,0.25);}
+.logo__name{font-size:15px;font-weight:600;letter-spacing:0.02em;}
+nav{display:flex;gap:30px;}
+nav a{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--dim);text-decoration:none;}
+nav a:hover{color:var(--fg);}
+.lang{font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--fg);border:1px solid rgba(234,241,248,0.25);padding:7px 13px;border-radius:999px;}
+.lang span{opacity:0.5;font-weight:400;}
+
+.hero{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 48px;max-width:760px;pointer-events:none;}
+.hero a,.hero .chips{pointer-events:auto;}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--acc);margin-bottom:26px;}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:pulse 2.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+h1{font-size:clamp(42px,5.4vw,74px);font-weight:700;line-height:1.04;letter-spacing:-0.015em;margin-bottom:26px;}
+h1 .grad{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.desc{font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;color:var(--dim);max-width:540px;margin-bottom:38px;}
+.cta-row{display:flex;gap:14px;margin-bottom:42px;}
+.btn{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;text-decoration:none;padding:15px 26px;border-radius:12px;transition:all .2s;}
+.btn--primary{background:linear-gradient(92deg,var(--acc),var(--acc2));color:#04121E;}
+.btn--primary:hover{filter:brightness(1.12);}
+.btn--ghost{color:var(--fg);border:1px solid rgba(234,241,248,0.3);}
+.btn--ghost:hover{border-color:var(--acc);color:var(--acc);}
+.chips{display:flex;flex-wrap:wrap;gap:9px;}
+.chip{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:0.05em;color:var(--dim);border:1px solid rgba(234,241,248,0.2);padding:7px 13px;border-radius:999px;animation:chipGlow 9s infinite;}
+.chip:nth-child(2){animation-delay:1.5s}.chip:nth-child(3){animation-delay:3s}
+.chip:nth-child(4){animation-delay:4.5s}.chip:nth-child(5){animation-delay:6s}.chip:nth-child(6){animation-delay:7.5s}
+@keyframes chipGlow{0%,18%,100%{border-color:rgba(234,241,248,0.2);color:var(--dim)}6%,12%{border-color:var(--acc);color:var(--acc)}}
+
+.hint{position:fixed;right:48px;bottom:84px;z-index:5;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);text-align:right;line-height:1.7;}
+.note{position:fixed;top:96px;left:48px;z-index:5;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;font-family:'Inter',sans-serif;}
+</style>
+</head>
+<body>
+
+<canvas id="net"></canvas>
+
+<header>
+  <a class="logo" href="#">
+    <span class="logo__mark">Н</span>
+    <span class="logo__name">Школа Нижнього</span>
+  </a>
+  <nav>
+    <a href="#">Бізнес-напрями</a><a href="#">Новини</a><a href="#">Медіа</a><a href="#">Партнери</a><a href="#">Контакти</a>
+  </nav>
+  <div class="lang">UA <span>| EN</span></div>
+</header>
+
+<main class="hero">
+  <span class="kicker"><i></i>Жива структура групи</span>
+  <h1>Єдина точка входу до масштабу, структури та <span class="grad">партнерств</span></h1>
+  <p class="desc">«Школа Нижнього» об'єднує бізнес-напрями, партнерські зв'язки, медіаактивність і ключові оновлення групи в одному корпоративному просторі.</p>
+  <div class="cta-row">
+    <a class="btn btn--primary" href="#">Переглянути бізнес-напрями</a>
+    <a class="btn btn--ghost" href="#">Дивитися медіа</a>
+  </div>
+  <div class="chips">
+    <span class="chip">Бізнеси</span><span class="chip">Партнерства</span><span class="chip">Медіа</span><span class="chip">Новини</span><span class="chip">Репутація</span><span class="chip">Масштаб</span>
+  </div>
+</main>
+
+<div class="hint">Структура реагує на курсор<br>вузол = дочірній бренд → його сайт</div>
+<div class="note">Концепція К3 · чернетка · 11.06.2026</div>
+
+<div class="concept-bar">
+  <a href="../k1/">К1 · Атлас</a>
+  <a href="../k2/">К2 · Кінетика</a>
+  <a class="on" href="../k3/">К3 · Структура</a>
+</div>
+
+<script>
+const cv = document.getElementById('net'), cx = cv.getContext('2d');
+let W,H,t=0,mx=0.5,my=0.5;
+function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;}
+fit(); addEventListener('resize',fit);
+addEventListener('mousemove',e=>{mx=e.clientX/innerWidth;my=e.clientY/innerHeight;});
+const UNITS=[
+ {label:'[Юніт 1]',a:-0.62,r:0.30},
+ {label:'[Юніт 2]',a:-0.05,r:0.36},
+ {label:'[Юніт 3]',a:0.55,r:0.30},
+ {label:'[Юніт 4]',a:1.1,r:0.38},
+];
+const SAT=[];for(let i=0;i<26;i++)SAT.push({a:Math.random()*6.28,r:0.12+Math.random()*0.42,s:0.0004+Math.random()*0.0012,z:Math.random()});
+function draw(){
+  t+=1; cx.clearRect(0,0,W,H);
+  const cxp=W*0.66+(mx-0.5)*-40*devicePixelRatio, cyp=H*0.5+(my-0.5)*-30*devicePixelRatio;
+  const R=Math.min(W,H);
+  // орбиты
+  cx.strokeStyle='rgba(90,200,250,0.08)';cx.lineWidth=1*devicePixelRatio;
+  [0.30,0.36,0.42].forEach(rr=>{cx.beginPath();cx.arc(cxp,cyp,R*rr,0,6.28);cx.stroke();});
+  // сателлиты
+  SAT.forEach(s=>{s.a+=s.s;const x=cxp+Math.cos(s.a)*R*s.r,y=cyp+Math.sin(s.a)*R*s.r*0.86;
+    cx.fillStyle=`rgba(123,140,255,${0.18+s.z*0.3})`;cx.beginPath();cx.arc(x,y,(0.8+s.z*1.6)*devicePixelRatio,0,6.28);cx.fill();});
+  // ядро
+  const coreR=(26+Math.sin(t*0.03)*3)*devicePixelRatio;
+  const g=cx.createRadialGradient(cxp,cyp,0,cxp,cyp,coreR*3.4);
+  g.addColorStop(0,'rgba(90,200,250,0.5)');g.addColorStop(1,'rgba(90,200,250,0)');
+  cx.fillStyle=g;cx.beginPath();cx.arc(cxp,cyp,coreR*3.4,0,6.28);cx.fill();
+  cx.fillStyle='#0B1322';cx.strokeStyle='rgba(90,200,250,0.9)';cx.lineWidth=1.6*devicePixelRatio;
+  cx.beginPath();cx.arc(cxp,cyp,coreR,0,6.28);cx.fill();cx.stroke();
+  cx.fillStyle='#EAF1F8';cx.font=`700 ${15*devicePixelRatio}px Space Grotesk`;cx.textAlign='center';cx.textBaseline='middle';
+  cx.fillText('ШН',cxp,cyp+1);
+  // юниты
+  UNITS.forEach((u,i)=>{
+    const ang=u.a+Math.sin(t*0.004+i)*0.05;
+    const x=cxp+Math.cos(ang)*R*u.r, y=cyp+Math.sin(ang)*R*u.r*0.86;
+    const p=(Math.sin(t*0.05+i*1.7)+1)/2;
+    cx.strokeStyle=`rgba(90,200,250,${0.22+p*0.3})`;cx.lineWidth=1.1*devicePixelRatio;
+    cx.beginPath();cx.moveTo(cxp,cyp);cx.lineTo(x,y);cx.stroke();
+    // искра по связи
+    const sp=(t*0.006+i*0.25)%1; const sx=cxp+(x-cxp)*sp, sy=cyp+(y-cyp)*sp;
+    cx.fillStyle='rgba(232,255,255,0.85)';cx.beginPath();cx.arc(sx,sy,1.6*devicePixelRatio,0,6.28);cx.fill();
+    const nr=(11+p*2.5)*devicePixelRatio;
+    cx.fillStyle='#0B1322';cx.strokeStyle=`rgba(123,140,255,${0.65+p*0.35})`;cx.lineWidth=1.4*devicePixelRatio;
+    cx.beginPath();cx.arc(x,y,nr,0,6.28);cx.fill();cx.stroke();
+    cx.fillStyle='rgba(234,241,248,0.92)';cx.font=`500 ${11.5*devicePixelRatio}px Inter`;cx.textAlign='left';
+    cx.fillText(u.label,x+nr+8*devicePixelRatio,y);
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>

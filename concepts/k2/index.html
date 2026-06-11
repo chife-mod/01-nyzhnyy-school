@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>К2 · Кінетичний хаб — Школа Нижнього</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Archivo+Black&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{ --bg:#0A0C10; --fg:#F2F1ED; --dim:rgba(242,241,237,0.62); --acc:#E8FF47; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;overflow:hidden;}
+
+.concept-bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99;display:flex;gap:6px;background:rgba(242,241,237,0.94);padding:6px;border-radius:999px;}
+.concept-bar a{font-size:11px;font-weight:600;letter-spacing:0.06em;color:#0A0C10;text-decoration:none;padding:6px 14px;border-radius:999px;opacity:0.55;}
+.concept-bar a.on{background:#0A0C10;color:#fff;opacity:1;}
+.concept-bar a:hover{opacity:1;}
+
+/* «видеофон» — симуляция: движущиеся световые пятна + зерно + виньетка */
+.vid{position:fixed;inset:0;z-index:0;overflow:hidden;background:#0A0C10;}
+.vid__blob{position:absolute;width:62vw;height:62vw;border-radius:50%;filter:blur(90px);opacity:0.5;mix-blend-mode:screen;}
+.vid__blob--a{background:radial-gradient(circle,#27435f 0%,transparent 62%);top:-18vw;left:-12vw;animation:drift 22s ease-in-out infinite alternate;}
+.vid__blob--b{background:radial-gradient(circle,#4f3a1e 0%,transparent 60%);bottom:-24vw;right:-14vw;animation:drift 26s ease-in-out infinite alternate-reverse;}
+.vid__blob--c{background:radial-gradient(circle,#1d4f46 0%,transparent 58%);bottom:-10vw;left:22vw;animation:drift 31s ease-in-out infinite alternate;}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(9vw,-7vh) scale(1.18)}}
+.vid::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");}
+.vid__vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 38%,rgba(5,6,8,0.82) 100%);}
+.vid__tag{position:fixed;top:104px;right:48px;z-index:5;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);border:1px dashed rgba(242,241,237,0.35);padding:7px 12px;border-radius:4px;}
+
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:26px 48px;mix-blend-mode:difference;}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;}
+.logo__mark{width:38px;height:38px;border:1.5px solid #fff;display:grid;place-items:center;font-family:'Archivo Black',sans-serif;font-size:17px;}
+.logo__name{font-size:14px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;}
+nav{display:flex;gap:30px;}
+nav a{font-size:13px;font-weight:500;letter-spacing:0.04em;color:rgba(255,255,255,0.78);text-decoration:none;}
+nav a:hover{color:#fff;}
+.lang{font-size:12px;font-weight:700;letter-spacing:0.1em;color:#fff;}
+.lang span{opacity:0.5;font-weight:400;}
+
+.hero{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 110px;}
+.kicker{font-size:12px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--dim);margin-bottom:18px;}
+h1{
+  font-family:'Archivo Black','Archivo',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(54px,8.6vw,128px);line-height:0.94;letter-spacing:-0.012em;
+  max-width:18ch;
+}
+h1 .accent{color:var(--acc);}
+.sub{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;margin-top:34px;flex-wrap:wrap;}
+.desc{font-size:16px;line-height:1.6;color:var(--dim);max-width:520px;}
+.cta-row{display:flex;gap:14px;flex-shrink:0;}
+.btn{font-size:13.5px;font-weight:600;letter-spacing:0.04em;text-decoration:none;padding:16px 26px;border-radius:999px;transition:all .2s;}
+.btn--primary{background:var(--fg);color:#0A0C10;}
+.btn--primary:hover{background:var(--acc);}
+.btn--ghost{color:var(--fg);border:1px solid rgba(242,241,237,0.4);}
+.btn--ghost:hover{border-color:var(--fg);}
+
+/* кинетический ротатор-строка */
+.ticker{position:absolute;top:46%;left:0;right:0;transform:translateY(-50%);overflow:hidden;pointer-events:none;opacity:0.16;}
+.ticker__in{display:flex;gap:64px;white-space:nowrap;font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(60px,9vw,150px);animation:tick 28s linear infinite;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.rotline{margin-top:26px;display:flex;gap:12px;align-items:baseline;font-size:13px;color:var(--dim);}
+.rotline b{color:var(--acc);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-size:12px;}
+.note{position:fixed;top:104px;left:48px;z-index:5;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<div class="vid">
+  <div class="vid__blob vid__blob--a"></div>
+  <div class="vid__blob vid__blob--b"></div>
+  <div class="vid__blob vid__blob--c"></div>
+  <div class="vid__vig"></div>
+</div>
+<div class="vid__tag">Відеофон · шоурил / зйомка клієнта</div>
+
+<header>
+  <a class="logo" href="#">
+    <span class="logo__mark">Н</span>
+    <span class="logo__name">Школа Нижнього</span>
+  </a>
+  <nav>
+    <a href="#">Бізнес-напрями</a><a href="#">Новини</a><a href="#">Медіа</a><a href="#">Партнери</a><a href="#">Контакти</a>
+  </nav>
+  <div class="lang">UA <span>/ EN</span></div>
+</header>
+
+<div class="ticker"><div class="ticker__in">
+  <span>Бізнеси</span><span>Партнерства</span><span>Медіа</span><span>Новини</span><span>Репутація</span><span>Масштаб</span>
+  <span>Бізнеси</span><span>Партнерства</span><span>Медіа</span><span>Новини</span><span>Репутація</span><span>Масштаб</span>
+</div></div>
+
+<main class="hero">
+  <span class="kicker">Зонтичний бренд групи компаній</span>
+  <h1>Єдина точка входу до <span class="accent">масштабу</span> групи</h1>
+  <div class="sub">
+    <p class="desc">«Школа Нижнього» об'єднує бізнес-напрями, партнерські зв'язки, медіаактивність і ключові оновлення групи в одному корпоративному просторі.</p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="#">Переглянути бізнес-напрями</a>
+      <a class="btn btn--ghost" href="#">Дивитися медіа</a>
+    </div>
+  </div>
+  <div class="rotline"><b>Live</b> Hero-відеоряд змінюється: виробництво · команди · події · партнерські зустрічі</div>
+</main>
+
+<div class="note">Концепція К2 · чернетка · 11.06.2026</div>
+
+<div class="concept-bar">
+  <a href="../k1/">К1 · Атлас</a>
+  <a class="on" href="../k2/">К2 · Кінетика</a>
+  <a href="../k3/">К3 · Структура</a>
+</div>
+
+</body>
+</html>

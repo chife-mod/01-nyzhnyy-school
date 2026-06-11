@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>К1 · Інституційний атлас — Школа Нижнього</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F3EF; --ink:#1A2330; --ink-dim:#5A6577; --line:#D8D3C8;
+  --accent:#16324F; --accent-2:#9C5C2E;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  background:var(--paper); color:var(--ink);
+  -webkit-font-smoothing:antialiased; overflow:hidden;
+}
+/* концепт-переключатель (службове, не частина дизайну) */
+.concept-bar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99;display:flex;gap:6px;background:rgba(26,35,48,0.92);padding:6px;border-radius:999px;}
+.concept-bar a{font-size:11px;font-weight:600;letter-spacing:0.06em;color:#fff;text-decoration:none;padding:6px 14px;border-radius:999px;opacity:0.55;}
+.concept-bar a.on{background:#fff;color:#1A2330;opacity:1;}
+.concept-bar a:hover{opacity:1;}
+
+/* ── header ── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 56px;
+  border-bottom:1px solid var(--line);
+  background:rgba(245,243,239,0.9);backdrop-filter:blur(8px);
+}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);}
+.logo__mark{width:40px;height:40px;border:1.5px solid var(--ink);display:grid;place-items:center;font-family:'Source Serif 4',serif;font-weight:600;font-size:19px;}
+.logo__name{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:0.01em;}
+nav{display:flex;gap:34px;}
+nav a{font-size:13.5px;font-weight:500;letter-spacing:0.02em;color:var(--ink-dim);text-decoration:none;transition:color .2s;}
+nav a:hover{color:var(--ink);}
+.lang{font-size:12.5px;font-weight:600;letter-spacing:0.08em;color:var(--ink);border:1px solid var(--line);padding:8px 14px;border-radius:2px;}
+.lang span{color:var(--ink-dim);font-weight:400;}
+
+/* ── hero ── */
+.hero{height:100vh;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;padding:128px 56px 64px;gap:64px;}
+.hero__left{display:flex;flex-direction:column;justify-content:center;max-width:640px;}
+.kicker{display:flex;align-items:center;gap:12px;font-size:11.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-2);margin-bottom:30px;}
+.kicker::before{content:"";width:36px;height:1px;background:var(--accent-2);}
+h1{
+  font-family:'Source Serif 4',serif;font-weight:600;
+  font-size:clamp(40px,4.6vw,64px);line-height:1.06;letter-spacing:-0.01em;
+  margin-bottom:28px;
+}
+h1 em{font-style:italic;color:var(--accent);}
+.desc{font-size:16.5px;line-height:1.65;color:var(--ink-dim);max-width:520px;margin-bottom:40px;}
+.cta-row{display:flex;align-items:center;gap:18px;}
+.btn{font-size:14px;font-weight:600;letter-spacing:0.02em;text-decoration:none;padding:16px 28px;border-radius:2px;transition:all .2s;}
+.btn--primary{background:var(--accent);color:#fff;}
+.btn--primary:hover{background:#0F2438;}
+.btn--ghost{color:var(--ink);border:1px solid var(--ink);}
+.btn--ghost:hover{background:var(--ink);color:#fff;}
+.rot{margin-top:56px;display:flex;align-items:baseline;gap:14px;font-size:13px;color:var(--ink-dim);}
+.rot__word{font-family:'Source Serif 4',serif;font-style:italic;font-size:19px;color:var(--ink);position:relative;min-width:160px;height:26px;display:inline-block;}
+.rot__word span{position:absolute;left:0;top:0;opacity:0;animation:rotw 12s infinite;}
+.rot__word span:nth-child(2){animation-delay:2s}.rot__word span:nth-child(3){animation-delay:4s}
+.rot__word span:nth-child(4){animation-delay:6s}.rot__word span:nth-child(5){animation-delay:8s}
+.rot__word span:nth-child(6){animation-delay:10s}
+@keyframes rotw{0%,16.6%{opacity:0;transform:translateY(8px)}3%,13%{opacity:1;transform:translateY(0)}16.7%,100%{opacity:0}}
+
+/* ── atlas (right) ── */
+.atlas{position:relative;border-left:1px solid var(--line);padding-left:64px;display:flex;flex-direction:column;justify-content:center;}
+.atlas__label{font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:26px;display:flex;justify-content:space-between;}
+.atlas__label small{font-weight:400;letter-spacing:0.05em;text-transform:none;}
+.atlas__grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+.unit{background:var(--paper);padding:30px 26px 26px;position:relative;transition:background .25s;cursor:pointer;min-height:178px;display:flex;flex-direction:column;justify-content:space-between;}
+.unit:hover{background:#EDEAE2;}
+.unit__num{font-family:'Source Serif 4',serif;font-size:13px;color:var(--accent-2);}
+.unit__name{font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;line-height:1.2;margin-top:10px;}
+.unit__meta{font-size:11.5px;letter-spacing:0.04em;color:var(--ink-dim);margin-top:6px;}
+.unit__arr{position:absolute;top:26px;right:24px;font-size:15px;color:var(--ink-dim);transition:transform .25s,color .25s;}
+.unit:hover .unit__arr{transform:translate(3px,-3px);color:var(--accent);}
+.atlas__foot{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-dim);margin-top:18px;letter-spacing:0.04em;}
+
+.note{position:fixed;top:96px;right:56px;font-size:10.5px;letter-spacing:0.08em;color:var(--ink-dim);text-transform:uppercase;}
+@media(max-width:1100px){.hero{grid-template-columns:1fr;overflow:auto}.atlas{border-left:none;padding-left:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">
+    <span class="logo__mark">Н</span>
+    <span class="logo__name">Школа Нижнього</span>
+  </a>
+  <nav>
+    <a href="#">Бізнес-напрями</a><a href="#">Новини</a><a href="#">Медіа</a><a href="#">Партнери</a><a href="#">Контакти</a>
+  </nav>
+  <div class="lang">UA <span>| EN</span></div>
+</header>
+
+<main class="hero">
+  <div class="hero__left">
+    <span class="kicker">Зонтичний бренд · Група компаній</span>
+    <h1>Єдина точка входу до масштабу, структури та партнерств <em>Школи Нижнього</em></h1>
+    <p class="desc">«Школа Нижнього» об'єднує бізнес-напрями, партнерські зв'язки, медіаактивність і ключові оновлення групи в одному корпоративному просторі.</p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="#">Переглянути бізнес-напрями</a>
+      <a class="btn btn--ghost" href="#">Дивитися медіа</a>
+    </div>
+    <div class="rot">У фокусі групи:
+      <span class="rot__word">
+        <span>бізнеси</span><span>партнерства</span><span>медіа</span><span>новини</span><span>репутація</span><span>масштаб</span>
+      </span>
+    </div>
+  </div>
+
+  <aside class="atlas">
+    <div class="atlas__label"><span>Атлас групи</span><small>4 напрями · архітектура до 12</small></div>
+    <div class="atlas__grid">
+      <div class="unit"><div><span class="unit__num">01 /</span><div class="unit__name">[Назва юніту 1]</div><div class="unit__meta">Сфера: [галузь]</div></div><span class="unit__arr">↗</span></div>
+      <div class="unit"><div><span class="unit__num">02 /</span><div class="unit__name">[Назва юніту 2]</div><div class="unit__meta">Сфера: [галузь]</div></div><span class="unit__arr">↗</span></div>
+      <div class="unit"><div><span class="unit__num">03 /</span><div class="unit__name">[Назва юніту 3]</div><div class="unit__meta">Сфера: [галузь]</div></div><span class="unit__arr">↗</span></div>
+      <div class="unit"><div><span class="unit__num">04 /</span><div class="unit__name">[Назва юніту 4]</div><div class="unit__meta">Сфера: [галузь]</div></div><span class="unit__arr">↗</span></div>
+    </div>
+    <div class="atlas__foot"><span>Кожен напрям — окремий сайт</span><span>49.84° N · 24.03° E</span></div>
+  </aside>
+</main>
+
+<div class="note">Концепція К1 · чернетка · 11.06.2026</div>
+
+<div class="concept-bar">
+  <a class="on" href="../k1/">К1 · Атлас</a>
+  <a href="../k2/">К2 · Кінетика</a>
+  <a href="../k3/">К3 · Структура</a>
+</div>
+
+</body>
+</html>
