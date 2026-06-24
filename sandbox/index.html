@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Sandbox · Концепції Hero — Школа Нижнього</title>
+<title>Концепції головного екрану — Школа Нижнього</title>
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <style>
 :root{
@@ -22,8 +22,6 @@ body{min-height:100vh;background:linear-gradient(180deg,var(--bg-top) 0%,var(--b
 .eyebrow{display:inline-block;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--brand-blue-light);margin-bottom:14px;}
 h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-height:1.05;margin-bottom:14px;}
 .lede{font-size:14.5px;line-height:1.6;color:rgba(255,255,255,0.55);max-width:760px;}
-.note{display:inline-flex;align-items:center;gap:9px;margin-top:18px;font-size:12px;letter-spacing:0.04em;color:#ffce8a;background:rgba(255,173,51,0.1);border:1px dashed rgba(255,173,51,0.35);border-radius:8px;padding:8px 13px;}
-
 .back{display:inline-flex;align-items:center;gap:7px;margin-top:22px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;}
 .back:hover{color:#fff;}
 
@@ -43,15 +41,11 @@ h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-he
 .card__body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:9px;flex:1;}
 .card__title{font-size:18px;font-weight:650;letter-spacing:-0.01em;}
 .card__desc{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.6);flex:1;}
-.card__refs{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.02em;}
 .card__cta{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:42px;border-radius:10px;background:rgba(159,186,205,0.16);border:1px solid rgba(159,186,205,0.4);color:#fff;font-size:13.5px;font-weight:600;text-decoration:none;transition:background .2s;}
 .card__cta:hover{background:rgba(159,186,205,0.28);}
 .card__cta::after{content:"↗";opacity:0.7;}
 
-.refbar{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:10px 28px;font-size:13px;color:rgba(255,255,255,0.5);}
-.refbar a{color:var(--brand-blue-light);text-decoration:none;border-bottom:1px solid transparent;}
-.refbar a:hover{border-bottom-color:var(--brand-blue-light);}
-.refbar code{background:rgba(255,255,255,0.06);padding:2px 7px;border-radius:5px;font-size:12px;color:rgba(255,255,255,0.7);}
+.footnote{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);font-size:12.5px;color:rgba(255,255,255,0.4);line-height:1.6;}
 </style>
 </head>
 <body>
@@ -63,11 +57,9 @@ h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-he
 </header>
 
 <main class="wrap">
-  <span class="eyebrow">Most of Design · Sandbox</span>
-  <h1>Концепції Hero — чернетки</h1>
-  <p class="lede">Три напрями головного екрану «Школи Нижнього» на вибір. Прев'ю живі — клік відкриває повну концепцію. Далі: ревʼю Олега → 1–2 направлені концепції → реальна айдентика → фінал.</p>
-  <div class="note">⚠ Внутрішнє · гілка <code style="background:none;color:inherit;padding:0;">concepts</code> · клієнтський дашборд (main) не зачеплено</div>
-  <br>
+  <span class="eyebrow">Most of Design · Напрями концепції</span>
+  <h1>Концепції головного екрану</h1>
+  <p class="lede">Три напрями головного екрану «Школи Нижнього» на вибір. Прев'ю живі — клік відкриває повну концепцію в окремій вкладці.</p>
   <a class="back" href="../">← На дашборд проєкту</a>
 
   <div class="grid">
@@ -80,8 +72,7 @@ h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-he
       </div>
       <div class="card__body">
         <div class="card__title">К1 · Інституційний атлас</div>
-        <div class="card__desc">Світлий, serif, RAND/CSIS-строгість. Атлас юнітів 2×2 праворуч, ротатор-курсив. Найближче до аудиторії «влада / інвестори / міжнародники».</div>
-        <div class="card__refs">Референси: Novo Holdings · List Holding · Tresmares</div>
+        <div class="card__desc">Світла, стримана подача рівня провідних інституцій: акцент на типографіці, чітка сітка, «атлас» напрямів групи. Довіра, масштаб, структура.</div>
         <a class="card__cta" href="../concepts/k1/">Відкрити концепцію</a>
       </div>
     </div>
@@ -93,9 +84,8 @@ h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-he
         <a class="cover" href="../concepts/k2/" aria-label="Відкрити К2"></a>
       </div>
       <div class="card__body">
-        <div class="card__title">К2 · Кінетичний хаб 🎬</div>
-        <div class="card__desc">Темний, відеофон (шоурил), заголовок на весь viewport, неоновий акцент, тикер. Відеофон — НАША опція (клієнт просив відео-блок з YouTube, не Hero-фон).</div>
-        <div class="card__refs">Референси: Pantheon · Dentsu · Wolverine</div>
+        <div class="card__title">К2 · Кінетичний хаб</div>
+        <div class="card__desc">Темна кінематографічна подача: відеофон, великий заголовок на весь екран, акцентний колір і рухомий рядок ключових напрямів. Енергія та сучасність.</div>
         <a class="card__cta" href="../concepts/k2/">Відкрити концепцію</a>
       </div>
     </div>
@@ -108,18 +98,14 @@ h1{font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-0.02em;line-he
       </div>
       <div class="card__body">
         <div class="card__title">К3 · Жива структура</div>
-        <div class="card__desc">Canvas-констеляція: ядро ШН + юніти-вузли, пульс зв'язків, реакція на курсор. Лягає на «перелінкер юнітів» + ориентир eplug (плавна анімація).</div>
-        <div class="card__refs">Референси: TGE Ventures · Sidewave · 2Future</div>
+        <div class="card__desc">Інтерактивна констеляція: ядро «Школа Нижнього» і вузли-напрями, живі зв'язки, реакція на курсор. Група як єдина жива система.</div>
         <a class="card__cta" href="../concepts/k3/">Відкрити концепцію</a>
       </div>
     </div>
 
   </div>
 
-  <div class="refbar">
-    <span>Бриф (зведений): <code>BRIEF.md</code> · транскрибація: <code>docs/transcript-2026-06-09.md</code></span>
-    <a href="https://www.figma.com/design/mdPyzM7JP6F1XGL7Jxo4dF/nyzhnyy-school-web-analysis?node-id=7-2" target="_blank" rel="noopener">Борд референсів у Figma ↗</a>
-  </div>
+  <p class="footnote">Робочі напрями головного екрану. Фінальний візуал — після вибору напряму та підключення фірмової айдентики.</p>
 </main>
 
 </body>
