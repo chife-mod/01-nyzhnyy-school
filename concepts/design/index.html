@@ -53,7 +53,7 @@ nav a{font-size:16px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
 /* заголовок serif — праворуч від щита (153,293), по-буквений fade-морфінг */
 .title{position:absolute;left:151px;top:289px;z-index:3;font-family:var(--serif);font-weight:500;font-size:48px;letter-spacing:.5px;color:#fff;text-transform:uppercase;}
 .title .tline{white-space:nowrap;height:43px;line-height:43px;}
-.title .ch{display:inline-block;opacity:0;transition:opacity .3s ease;will-change:opacity;}
+.title .ch{display:inline-block;opacity:0;transition:opacity .9s ease-in-out;will-change:opacity;}
 .title .ch.sp{width:.28em;}
 
 /* ── tiles: flush, 8px верхній бордер-трек (білий), золото на активній ── */
@@ -173,7 +173,7 @@ function makeFader(el){
       if(oc === nc){ show(span, nc); continue; }                  // не змінилась — лишаємо
       const delay = Math.random() * 360;                          // рандомний старт фейду
       timers.push(setTimeout(()=>{ span.style.opacity = 0; }, delay));            // стара гасне
-      timers.push(setTimeout(()=>{ show(span, nc); }, delay + (oc ? 300 : 140))); // нова проявляється
+      timers.push(setTimeout(()=>{ show(span, nc); }, delay + (oc ? 900 : 420))); // нова проявляється
     }
   }
   return { set };
