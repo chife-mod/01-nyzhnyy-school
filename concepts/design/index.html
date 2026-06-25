@@ -158,23 +158,28 @@ const tiles = [...document.querySelectorAll('.tile')];
       гасне, на її місці проявляється нова (рандомний старт, без перебору) ── */
 function makeFader(el){
   let cur = '', timers = [];
-  function ensureSpans(n){
-    while(el.children.length < n){ const s = document.createElement('span'); s.className = 'ch'; s.style.opacity = 0; el.appendChild(s); }
-    while(el.children.length > n) el.removeChild(el.lastChild);
+  function build(text){                                 // нова фраза, кожна літера невидима
+    el.textContent = '';
+    for(const ch of text){
+      const sp = document.createElement('span'); sp.className = 'ch';
+      sp.textContent = ch === ' ' ? ' ' : ch;
+      sp.style.opacity = 0;
+      el.appendChild(sp);
+    }
+    return [...el.children];
   }
-  function show(span, ch){ span.textContent = ch === ' ' ? ' ' : ch; span.style.opacity = ch ? 1 : 0; }
+  function fadeIn(spans){
+    void el.offsetWidth;                                 // reflow -> transition спрацює з 0
+    spans.forEach(sp=>{ timers.push(setTimeout(()=>{ sp.style.opacity = 1; }, Math.random() * 320)); });
+  }
   function set(text){
     timers.forEach(clearTimeout); timers = [];
-    const old = cur; cur = text;
-    const len = Math.max(old.length, text.length);
-    ensureSpans(len);
-    for(let i = 0; i < len; i++){
-      const span = el.children[i], oc = old[i] || '', nc = text[i] || '';
-      if(oc === nc){ show(span, nc); continue; }                  // не змінилась — лишаємо
-      const delay = Math.random() * 360;                          // рандомний старт фейду
-      timers.push(setTimeout(()=>{ span.style.opacity = 0; }, delay));            // стара гасне
-      timers.push(setTimeout(()=>{ show(span, nc); }, delay + (oc ? 900 : 420))); // нова проявляється
-    }
+    if(cur === ''){ cur = text; fadeIn(build(text)); return; }      // перший показ
+    cur = text;
+    // фаза 1: стара фраза гасне по літерах (розкладка стабільна)
+    [...el.children].forEach(sp=>{ timers.push(setTimeout(()=>{ sp.style.opacity = 0; }, Math.random() * 320)); });
+    // фаза 2: коли все невидиме - підміна на нову й проявлення по літерах (без виштовхування)
+    timers.push(setTimeout(()=>{ fadeIn(build(text)); }, 1250));
   }
   return { set };
 }
