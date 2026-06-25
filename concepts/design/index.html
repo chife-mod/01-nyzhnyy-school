@@ -206,8 +206,10 @@ function setTitle(l1, l2){
 function setNews(text){
   clearTimeout(newsTimer);
   if(!newsInit){ newsInit = true; newsTitle.textContent = text; newsTitle.style.opacity = 1; return; }
-  newsTitle.style.opacity = 0;                                     // фейд при зміні напряму
-  newsTimer = setTimeout(()=>{ newsTitle.textContent = text; newsTitle.style.opacity = 1; }, 450);
+  newsTimer = setTimeout(()=>{                                     // затримка: заголовок змінюється першим
+    newsTitle.style.opacity = 0;                                  // потім тихо гасне/проявляється новина (вторинно)
+    newsTimer = setTimeout(()=>{ newsTitle.textContent = text; newsTitle.style.opacity = 1; }, 600);
+  }, 1800);
 }
 
 function render(i){
