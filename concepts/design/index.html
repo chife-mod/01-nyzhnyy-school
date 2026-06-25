@@ -57,6 +57,13 @@ nav a{font-size:14px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
 .title .ch{display:inline-block;opacity:0;transition:opacity .9s ease-in-out;will-change:opacity;}
 .title .ch.sp{width:.28em;}
 
+/* ── блок останніх новин — лівий край по плитці 03 «Business School» (left:354) ── */
+.news{position:absolute;left:354px;top:518px;width:197px;z-index:3;display:flex;flex-direction:column;gap:12px;font-family:var(--sans);}
+.news-head{display:flex;flex-direction:column;gap:8px;}
+.news-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.5;}
+.news-title{font-size:14px;line-height:1.3;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;transition:opacity .6s ease;}
+.news-cta{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#d6ad76;text-decoration:none;}
+
 /* ── tiles: flush, 8px верхній бордер-трек (білий), золото на активній ── */
 .tiles{position:absolute;left:0;top:664px;width:708px;height:120px;display:flex;}
 .tile{position:relative;flex:1 1 0;height:120px;overflow:hidden;}
@@ -98,6 +105,13 @@ nav a{font-size:14px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
       </nav>
       <div class="lang">En</div>
       <div class="title" id="title"><div class="tline" id="tl1"></div><div class="tline" id="tl2"></div></div>
+      <div class="news">
+        <div class="news-head">
+          <div class="news-label">Latest news</div>
+          <div class="news-title" id="newsTitle">Shaping the Future Generation of Public Leaders</div>
+        </div>
+        <a class="news-cta" href="#">Discover our story</a>
+      </div>
     </div>
 
     <div class="tiles">
@@ -148,10 +162,10 @@ fit(); addEventListener('resize', fit);
 
 /* ── 4 напрями, ~5с кожен ── */
 const DIRS = [
-  { color:'#05323f', t1:'CITIES AND', t2:'COMMUNITIES' },
-  { color:'#503086', t1:'PUBLIC',      t2:'GOVERNANCE' },
-  { color:'#3b0142', t1:'BUSINESS',    t2:'SCHOOL' },
-  { color:'#5b4039', t1:'DIPLOMACY',   t2:'' },
+  { color:'#05323f', t1:'CITIES AND', t2:'COMMUNITIES', news:'Building Resilient Cities and Stronger Communities' },
+  { color:'#503086', t1:'PUBLIC',      t2:'GOVERNANCE',  news:'Shaping the Future Generation of Public Leaders' },
+  { color:'#3b0142', t1:'BUSINESS',    t2:'SCHOOL',      news:'Executive Education for Purpose-Driven Leaders' },
+  { color:'#5b4039', t1:'DIPLOMACY',   t2:'',            news:'Advancing Dialogue Across Borders and Institutions' },
 ];
 const STEP = 7000;                     // 7с на кадр
 const stage = document.getElementById('stage');
@@ -163,6 +177,8 @@ const tiles = [...document.querySelectorAll('.tile')];
 const tl1 = document.getElementById('tl1');
 const tl2 = document.getElementById('tl2');
 let titleTimers = [], titleInit = false;
+const newsTitle = document.getElementById('newsTitle');
+let newsTimer = null, newsInit = false;
 
 function buildLine(el, text){
   el.textContent = '';
@@ -187,11 +203,19 @@ function setTitle(l1, l2){
   titleTimers.push(setTimeout(reveal, 950));                                    // після згасання — нова в порядку
 }
 
+function setNews(text){
+  clearTimeout(newsTimer);
+  if(!newsInit){ newsInit = true; newsTitle.textContent = text; newsTitle.style.opacity = 1; return; }
+  newsTitle.style.opacity = 0;                                     // фейд при зміні напряму
+  newsTimer = setTimeout(()=>{ newsTitle.textContent = text; newsTitle.style.opacity = 1; }, 450);
+}
+
 function render(i){
   const d = DIRS[i];
   hero.style.backgroundColor = d.color;
   stage.style.setProperty('--shield-dir', d.color);
   setTitle(d.t1, d.t2);
+  setNews(d.news);
   tiles.forEach((t,k)=>{
     t.classList.toggle('active', k === i);
     const p = t.querySelector('.progress');
