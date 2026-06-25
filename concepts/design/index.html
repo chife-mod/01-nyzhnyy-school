@@ -11,7 +11,7 @@
 <style>
 :root{
   --gold:#b89362;
-  --serif:'Playfair Display', Georgia, serif;
+  --serif:'Playfair Display', Georgia, serif;   /* стенд-ін serif заголовка — реальний шрифт клієнт ще шукає */
   --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif;
   --s:1;
 }
@@ -19,47 +19,52 @@
 html,body{height:100%;}
 body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}
 
-/* fixed 1440×800 stage, scaled to fit any viewport (no adaptive) */
+/* fixed 1440×800 stage, scaled to fit (no adaptive). Stage bg = білий шов рамки */
 .stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;flex:0 0 auto;}
 
-/* two panels — full bleed, thin white seams between (як у макеті) */
-.left,.right{position:absolute;top:0;height:800px;}
-.left{left:0;width:718px;overflow:hidden;background:#797979;}
-.right{left:722px;width:718px;display:flex;flex-direction:column;gap:3px;}
+/* панелі: 8px зовнішня рамка + 8px центральний шов (точно за макетом) */
+.left,.right{position:absolute;top:8px;height:784px;width:708px;}
+.left{left:8px;overflow:hidden;background:#797979;}
+.right{left:724px;}
 
 /* ── LEFT (video) ── */
-.video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.video-fallback{position:absolute;inset:0;background:#797979;}
+.video,.video-fallback{position:absolute;inset:0;width:100%;height:100%;}
+.video{object-fit:cover;}
+.video-fallback{background:#797979;}
 .video-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);}
-.wordmark{position:absolute;top:32px;left:32px;width:128px;height:auto;z-index:3;}
-.headline{position:absolute;left:38px;bottom:36px;right:60px;z-index:3;color:#fff;font-family:var(--sans);font-weight:600;font-size:92px;line-height:.9;letter-spacing:-3.68px;}
+.wordmark{position:absolute;top:32px;left:32px;width:126px;height:40px;z-index:3;}
+.headline{position:absolute;left:32px;bottom:32px;right:66px;z-index:3;color:#fff;font-family:var(--sans);font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
 
-/* ── RIGHT (hero + tiles) ── */
-.hero{flex:1 0 0;position:relative;overflow:hidden;background:#503086;transition:background-color .8s cubic-bezier(.4,0,.2,1);}
+/* ── RIGHT (hero + tiles) — flush, без проміжку ── */
+.hero{position:absolute;left:0;top:0;width:708px;height:664px;overflow:hidden;background:#503086;transition:background-color .8s cubic-bezier(.4,0,.2,1);}
 nav{position:absolute;top:35px;left:50%;transform:translateX(-50%);display:flex;gap:24px;z-index:4;}
-nav a{font-size:16px;letter-spacing:1.12px;color:#fff;text-decoration:none;opacity:.92;}
-nav a:hover{opacity:1;}
-.lang{position:absolute;top:35px;left:668px;z-index:4;font-size:16px;letter-spacing:1.12px;color:#fff;border-bottom:2px solid var(--gold);padding-bottom:4px;}
+nav a{font-size:16px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity:.95;}
+.lang{position:absolute;top:35px;left:656px;z-index:4;font-size:16px;letter-spacing:.5px;color:#fff;border-bottom:2px solid var(--gold);padding-bottom:3px;}
 
-/* big serif title — right of shield, vertically centred */
-.title{position:absolute;left:150px;top:calc(50% + 6px);transform:translateY(-50%);z-index:3;font-family:var(--serif);font-weight:700;font-size:50px;line-height:1.03;letter-spacing:.5px;color:#fff;text-transform:uppercase;white-space:nowrap;transition:opacity .35s ease;}
+/* заголовок serif — праворуч від щита (153,293), по-буквений fade-морфінг */
+.title{position:absolute;left:153px;top:293px;z-index:3;font-family:var(--serif);font-weight:700;font-size:50px;letter-spacing:.5px;color:#fff;text-transform:uppercase;}
+.title .tline{white-space:nowrap;height:43px;line-height:43px;}
+.title .ch{display:inline-block;opacity:0;transition:opacity .3s ease;will-change:opacity;}
+.title .ch.sp{width:.28em;}
 
-/* ── tiles ── */
-.tiles{display:flex;gap:3px;height:120px;flex:0 0 120px;}
-.tile{position:relative;flex:1 1 0;padding:24px;display:flex;align-items:flex-end;overflow:hidden;}
-.tile .num{position:absolute;top:6px;right:8px;font-size:12px;color:#fff;opacity:.5;}
-.tile .label{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.12;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);transition:color .8s ease;}
-.tile.active .label{color:#fff;}
-.tile .topbar{display:none;}
-.tile .progress{position:absolute;top:0;left:0;height:8px;width:0;background:var(--gold);}
-.t-cities{background:#05323f;}
-.t-public{background:#503086;}
-.t-business{background:#3b0142;}
-.t-diplomacy{background:#5b4039;}
+/* ── tiles: flush, 8px верхній бордер-трек (білий), золото на активній ── */
+.tiles{position:absolute;left:0;top:664px;width:708px;height:120px;display:flex;}
+.tile{position:relative;flex:1 1 0;height:120px;overflow:hidden;}
+.t-cities{background:#05323f;}.t-public{background:#503086;}.t-business{background:#3b0142;}.t-diplomacy{background:#5b4039;}
+.tile .topbar{position:absolute;top:0;left:0;width:100%;height:8px;background:#fff;z-index:1;}
+.tile .progress{position:absolute;top:0;left:0;height:8px;width:0;background:var(--gold);z-index:2;}
+.tile .num{position:absolute;top:14px;right:8px;font-size:12px;color:#fff;opacity:.5;}
+/* лейбли = точні Figma-SVG як CSS-маска (геометрія з файлу), колір через bg */
+.tile .label{position:absolute;left:24px;bottom:24px;background:var(--gold);transition:background-color .8s ease;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;}
+.tile.active .label{background:#fff;}
+.l-cities{width:110.825px;height:29px;-webkit-mask-image:url(assets/label1-cities.svg);mask-image:url(assets/label1-cities.svg);}
+.l-public{width:109.093px;height:29px;-webkit-mask-image:url(assets/label2-public.svg);mask-image:url(assets/label2-public.svg);}
+.l-business{width:72.518px;height:29px;-webkit-mask-image:url(assets/label3-business.svg);mask-image:url(assets/label3-business.svg);}
+.l-diplomacy{width:92.299px;height:12.07px;-webkit-mask-image:url(assets/label4-diplomacy.svg);mask-image:url(assets/label4-diplomacy.svg);}
 
-/* ── shield, pinned to centre seam, above everything ── */
-.shield{position:absolute;left:720px;top:350px;transform:translate(-50%,-50%);width:200px;height:225px;z-index:10;}
-.shield svg{width:100%;height:100%;display:block;overflow:visible;}
+/* ── shield — точна позиція групи (627,256) 186×188, тінь оверфлоу ── */
+.shield{position:absolute;left:627px;top:256px;width:186px;height:188px;z-index:10;}
+.shield svg{position:absolute;left:-14px;top:-3px;width:214px;height:241px;overflow:visible;display:block;}
 #shieldLower{fill:var(--shield-dir,#503086);transition:fill .8s cubic-bezier(.4,0,.2,1);}
 </style>
 </head>
@@ -83,14 +88,14 @@ nav a:hover{opacity:1;}
         <a href="#">About</a><a href="#">Ecosystem</a><a href="#">Insights</a><a href="#">Partners</a><a href="#">Contact</a>
       </nav>
       <div class="lang">En</div>
-      <div class="title" id="title">PUBLIC<br>GOVERNANCE</div>
+      <div class="title" id="title"><div class="tline" id="tl1"></div><div class="tline" id="tl2"></div></div>
     </div>
 
     <div class="tiles">
-      <div class="tile t-cities"    data-i="0"><span class="topbar"></span><span class="progress"></span><span class="num">01</span><div class="label">Cities and<br>Communities</div></div>
-      <div class="tile t-public"    data-i="1"><span class="topbar"></span><span class="progress"></span><span class="num">02</span><div class="label">Public<br>Governance</div></div>
-      <div class="tile t-business"  data-i="2"><span class="topbar"></span><span class="progress"></span><span class="num">03</span><div class="label">Business<br>School</div></div>
-      <div class="tile t-diplomacy" data-i="3"><span class="topbar"></span><span class="progress"></span><span class="num">04</span><div class="label">Diplomacy</div></div>
+      <div class="tile t-cities"    data-i="0"><span class="topbar"></span><span class="progress"></span><span class="num">01</span><div class="label l-cities"></div></div>
+      <div class="tile t-public"    data-i="1"><span class="topbar"></span><span class="progress"></span><span class="num">02</span><div class="label l-public"></div></div>
+      <div class="tile t-business"  data-i="2"><span class="topbar"></span><span class="progress"></span><span class="num">03</span><div class="label l-business"></div></div>
+      <div class="tile t-diplomacy" data-i="3"><span class="topbar"></span><span class="progress"></span><span class="num">04</span><div class="label l-diplomacy"></div></div>
     </div>
   </div>
 
@@ -125,49 +130,79 @@ nav a:hover{opacity:1;}
 </div>
 
 <script>
-/* scale stage to fit viewport (keeps pixel-perfect proportions, no adaptive layout) */
+/* масштаб stage під вʼюпорт (пропорції 1:1, без адаптиву) */
 function fit(){
   const s = Math.min(window.innerWidth/1440, window.innerHeight/800);
   document.documentElement.style.setProperty('--s', s);
 }
 fit(); addEventListener('resize', fit);
 
-/* ── the loop: 4 directions, ~5s each, smooth ── */
+/* ── 4 напрями, ~5с кожен ── */
 const DIRS = [
   { color:'#05323f', t1:'CITIES AND', t2:'COMMUNITIES' },
   { color:'#503086', t1:'PUBLIC',      t2:'GOVERNANCE' },
   { color:'#3b0142', t1:'BUSINESS',    t2:'SCHOOL' },
   { color:'#5b4039', t1:'DIPLOMACY',   t2:'' },
 ];
-const STEP = 5000;
-const hero = document.getElementById('hero');
+const STEP = 5000, STAG = 34;          // STAG = затримка між буквами (мс)
 const stage = document.getElementById('stage');
-const titleEl = document.getElementById('title');
+const hero  = document.getElementById('hero');
+const tl1 = document.getElementById('tl1');
+const tl2 = document.getElementById('tl2');
 const tiles = [...document.querySelectorAll('.tile')];
-let idx = 1; // старт на 02 Public Governance (як у макеті)
 
-function render(i, animateProgress){
+/* розбиває рядок на <span> по літері */
+function buildLine(el, text){
+  el.textContent = '';
+  for(const c of text){
+    const s = document.createElement('span');
+    if(c === ' '){ s.className = 'ch sp'; }
+    else { s.className = 'ch'; s.textContent = c; }
+    el.appendChild(s);
+  }
+  return [...el.querySelectorAll('.ch')];
+}
+function fadeIn(chars){ chars.forEach((s,i)=>{ s.style.transitionDelay = (i*STAG)+'ms'; s.style.opacity = 1; }); }
+
+/* по-буквений fade-морфінг: старі літери гаснуть зі стаггером → нові проявляються */
+let titleTimer = null;
+function setTitle(l1, l2, animate){
+  clearTimeout(titleTimer);            // скасувати попередній перехід (без накладання)
+  if(!animate){ fadeIn(buildLine(tl1, l1)); fadeIn(buildLine(tl2, l2)); return; }
+  let maxOut = 0;
+  [tl1, tl2].forEach(el=>{
+    [...el.querySelectorAll('.ch')].forEach((s,i)=>{
+      s.style.transitionDelay = (i*STAG)+'ms'; s.style.opacity = 0;
+      if(i*STAG > maxOut) maxOut = i*STAG;
+    });
+  });
+  titleTimer = setTimeout(()=>{
+    const c1 = buildLine(tl1, l1), c2 = buildLine(tl2, l2);
+    void tl1.offsetWidth;              // reflow, щоб transition спрацював із 0
+    fadeIn(c1); fadeIn(c2);
+  }, maxOut + 340);
+}
+
+function render(i, animate){
   const d = DIRS[i];
   hero.style.backgroundColor = d.color;
   stage.style.setProperty('--shield-dir', d.color);
-  // title crossfade
-  titleEl.style.opacity = 0;
-  setTimeout(()=>{ titleEl.innerHTML = d.t2 ? (d.t1+'<br>'+d.t2) : d.t1; titleEl.style.opacity = 1; }, 220);
-  // tiles: active gold progress fills 0→100% over STEP; others reset white
+  setTitle(d.t1, d.t2, animate);
   tiles.forEach((t,k)=>{
-    t.classList.toggle('active', k===i);
+    t.classList.toggle('active', k === i);
     const p = t.querySelector('.progress');
     p.style.transition = 'none';
     p.style.width = '0%';
-    if(k===i){
-      // force reflow then animate
-      void p.offsetWidth;
+    if(k === i){
+      void p.offsetWidth;             // reflow → progress заповнюється 0→100%
       p.style.transition = `width ${STEP}ms linear`;
       p.style.width = '100%';
     }
   });
 }
-render(idx, true);
+
+let idx = 1;                          // старт на 02 Public Governance (як у макеті)
+render(idx, false);
 setInterval(()=>{ idx = (idx+1) % DIRS.length; render(idx, true); }, STEP);
 </script>
 </body>
