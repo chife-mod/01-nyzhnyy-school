@@ -8,3 +8,7 @@ BRIEF.md
 docs/
 consilium/
 references/
+
+# Відео-мастери (ProRes/важкі вихідники) — у репо лише стиснуті веб-версії
+assets/incoming/
+*.mov
