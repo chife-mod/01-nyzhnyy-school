@@ -149,50 +149,64 @@ const DIRS = [
   { color:'#3b0142', t1:'BUSINESS',    t2:'SCHOOL' },
   { color:'#5b4039', t1:'DIPLOMACY',   t2:'' },
 ];
-const STEP = 5000, STAG = 34;          // STAG = затримка між буквами (мс)
+const STEP = 8000;                     // 8с на кадр
+const GL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const stage = document.getElementById('stage');
 const hero  = document.getElementById('hero');
-const tl1 = document.getElementById('tl1');
-const tl2 = document.getElementById('tl2');
 const tiles = [...document.querySelectorAll('.tile')];
 
-/* розбиває рядок на <span> по літері */
-function buildLine(el, text){
-  el.textContent = '';
-  for(const c of text){
-    const s = document.createElement('span');
-    if(c === ' '){ s.className = 'ch sp'; }
-    else { s.className = 'ch'; s.textContent = c; }
-    el.appendChild(s);
+/* ── скрембл-морфінг: кожна позиція незалежно (рандомний старт + тривалість)
+      перебирає випадкові літери — «перебір варіантів» — і осідає в цільову ── */
+function makeScrambler(el){
+  let timer = null, start = 0, items = [], cur = '';
+  function set(text){
+    const old = cur; cur = text;
+    const len = Math.max(old.length, text.length);
+    el.textContent = '';
+    items = [];
+    for(let i = 0; i < len; i++){
+      const s = document.createElement('span'); s.className = 'ch'; el.appendChild(s);
+      items.push({
+        s, from: old[i] || '', to: text[i] || '',
+        space: (text[i] === ' '),
+        delay: Math.random() * 480,          // рандомний розкид старту
+        dur:   260 + Math.random() * 560     // тривалість перебору
+      });
+    }
+    clearInterval(timer);
+    start = performance.now();
+    step();                                  // перший кадр одразу
+    timer = setInterval(step, 45);           // setInterval (не rAF) — крутиться і в фон-вкладці
   }
-  return [...el.querySelectorAll('.ch')];
-}
-function fadeIn(chars){ chars.forEach((s,i)=>{ s.style.transitionDelay = (i*STAG)+'ms'; s.style.opacity = 1; }); }
-
-/* по-буквений fade-морфінг: старі літери гаснуть зі стаггером → нові проявляються */
-let titleTimer = null;
-function setTitle(l1, l2, animate){
-  clearTimeout(titleTimer);            // скасувати попередній перехід (без накладання)
-  if(!animate){ fadeIn(buildLine(tl1, l1)); fadeIn(buildLine(tl2, l2)); return; }
-  let maxOut = 0;
-  [tl1, tl2].forEach(el=>{
-    [...el.querySelectorAll('.ch')].forEach((s,i)=>{
-      s.style.transitionDelay = (i*STAG)+'ms'; s.style.opacity = 0;
-      if(i*STAG > maxOut) maxOut = i*STAG;
-    });
-  });
-  titleTimer = setTimeout(()=>{
-    const c1 = buildLine(tl1, l1), c2 = buildLine(tl2, l2);
-    void tl1.offsetWidth;              // reflow, щоб transition спрацював із 0
-    fadeIn(c1); fadeIn(c2);
-  }, maxOut + 340);
+  function step(){
+    const t = performance.now() - start; let done = 0;
+    for(const it of items){
+      if(it.space){ it.s.innerHTML = '&nbsp;'; it.s.style.opacity = 1; done++; continue; }
+      if(t < it.delay){                                   // ще стара літера
+        it.s.textContent = it.from === ' ' ? '' : it.from;
+        it.s.style.opacity = (it.from && it.from !== ' ') ? 1 : 0;
+      } else if(it.to && t < it.delay + it.dur){          // перебір випадкових
+        it.s.textContent = GL[(Math.random() * GL.length) | 0];
+        it.s.style.opacity = 0.5;
+      } else {                                            // осіло у фінальну
+        it.s.textContent = it.to === ' ' ? '' : it.to;
+        it.s.style.opacity = (it.to && it.to !== ' ') ? 1 : 0;
+        done++;
+      }
+    }
+    if(done >= items.length){ clearInterval(timer); timer = null; }
+  }
+  return { set };
 }
 
-function render(i, animate){
+const S1 = makeScrambler(document.getElementById('tl1'));
+const S2 = makeScrambler(document.getElementById('tl2'));
+
+function render(i){
   const d = DIRS[i];
   hero.style.backgroundColor = d.color;
   stage.style.setProperty('--shield-dir', d.color);
-  setTitle(d.t1, d.t2, animate);
+  S1.set(d.t1); S2.set(d.t2);
   tiles.forEach((t,k)=>{
     t.classList.toggle('active', k === i);
     const p = t.querySelector('.progress');
@@ -207,8 +221,8 @@ function render(i, animate){
 }
 
 let idx = 1;                          // старт на 02 Public Governance (як у макеті)
-render(idx, false);
-setInterval(()=>{ idx = (idx+1) % DIRS.length; render(idx, true); }, STEP);
+render(idx);
+setInterval(()=>{ idx = (idx + 1) % DIRS.length; render(idx); }, STEP);
 </script>
 </body>
 </html>
