@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Школа Нижнього — концепція головної</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#b89362;
+  --serif:'Playfair Display', Georgia, serif;
+  --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif;
+  --s:1;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+
+/* fixed 1440×800 stage, scaled to fit any viewport (no adaptive) */
+.stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;flex:0 0 auto;}
+
+/* two panels — full bleed, thin white seams between (як у макеті) */
+.left,.right{position:absolute;top:0;height:800px;}
+.left{left:0;width:718px;overflow:hidden;background:#797979;}
+.right{left:722px;width:718px;display:flex;flex-direction:column;gap:3px;}
+
+/* ── LEFT (video) ── */
+.video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.video-fallback{position:absolute;inset:0;background:#797979;}
+.video-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.wordmark{position:absolute;top:32px;left:32px;width:128px;height:auto;z-index:3;}
+.headline{position:absolute;left:38px;bottom:36px;right:60px;z-index:3;color:#fff;font-family:var(--sans);font-weight:600;font-size:92px;line-height:.9;letter-spacing:-3.68px;}
+
+/* ── RIGHT (hero + tiles) ── */
+.hero{flex:1 0 0;position:relative;overflow:hidden;background:#503086;transition:background-color .8s cubic-bezier(.4,0,.2,1);}
+nav{position:absolute;top:35px;left:50%;transform:translateX(-50%);display:flex;gap:24px;z-index:4;}
+nav a{font-size:16px;letter-spacing:1.12px;color:#fff;text-decoration:none;opacity:.92;}
+nav a:hover{opacity:1;}
+.lang{position:absolute;top:35px;left:668px;z-index:4;font-size:16px;letter-spacing:1.12px;color:#fff;border-bottom:2px solid var(--gold);padding-bottom:4px;}
+
+/* big serif title — right of shield, vertically centred */
+.title{position:absolute;left:150px;top:calc(50% + 6px);transform:translateY(-50%);z-index:3;font-family:var(--serif);font-weight:700;font-size:50px;line-height:1.03;letter-spacing:.5px;color:#fff;text-transform:uppercase;white-space:nowrap;transition:opacity .35s ease;}
+
+/* ── tiles ── */
+.tiles{display:flex;gap:3px;height:120px;flex:0 0 120px;}
+.tile{position:relative;flex:1 1 0;padding:24px;display:flex;align-items:flex-end;overflow:hidden;}
+.tile .num{position:absolute;top:6px;right:8px;font-size:12px;color:#fff;opacity:.5;}
+.tile .label{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.12;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);transition:color .8s ease;}
+.tile.active .label{color:#fff;}
+.tile .topbar{display:none;}
+.tile .progress{position:absolute;top:0;left:0;height:8px;width:0;background:var(--gold);}
+.t-cities{background:#05323f;}
+.t-public{background:#503086;}
+.t-business{background:#3b0142;}
+.t-diplomacy{background:#5b4039;}
+
+/* ── shield, pinned to centre seam, above everything ── */
+.shield{position:absolute;left:720px;top:350px;transform:translate(-50%,-50%);width:200px;height:225px;z-index:10;}
+.shield svg{width:100%;height:100%;display:block;overflow:visible;}
+#shieldLower{fill:var(--shield-dir,#503086);transition:fill .8s cubic-bezier(.4,0,.2,1);}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- LEFT — video -->
+  <div class="left">
+    <div class="video-fallback"></div>
+    <video class="video" autoplay muted loop playsinline poster=""></video>
+    <div class="video-hint">відео — місце під продакшн</div>
+    <img class="wordmark" src="assets/wordmark.svg" alt="Nyzhnyy School">
+    <div class="headline">Leadership.<br>Governance.<br>Communities.</div>
+  </div>
+
+  <!-- RIGHT — hero + tiles -->
+  <div class="right">
+    <div class="hero" id="hero">
+      <nav>
+        <a href="#">About</a><a href="#">Ecosystem</a><a href="#">Insights</a><a href="#">Partners</a><a href="#">Contact</a>
+      </nav>
+      <div class="lang">En</div>
+      <div class="title" id="title">PUBLIC<br>GOVERNANCE</div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile t-cities"    data-i="0"><span class="topbar"></span><span class="progress"></span><span class="num">01</span><div class="label">Cities and<br>Communities</div></div>
+      <div class="tile t-public"    data-i="1"><span class="topbar"></span><span class="progress"></span><span class="num">02</span><div class="label">Public<br>Governance</div></div>
+      <div class="tile t-business"  data-i="2"><span class="topbar"></span><span class="progress"></span><span class="num">03</span><div class="label">Business<br>School</div></div>
+      <div class="tile t-diplomacy" data-i="3"><span class="topbar"></span><span class="progress"></span><span class="num">04</span><div class="label">Diplomacy</div></div>
+    </div>
+  </div>
+
+  <!-- SHIELD — centre seam -->
+  <div class="shield" id="shield">
+    <svg viewBox="0 0 214 241" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#shsh)">
+        <path id="shieldLower" d="M30.0508 3L173.38 163.881L107 191L14 153.025V3H30.0508Z"/>
+        <path d="M200 3V153.025L173.38 163.881L30.0508 3H200Z" fill="#B89362"/>
+        <g>
+          <path d="M171.683 54.1857C167.507 52.2673 163.897 50.5666 163.81 46.7735C163.81 43.7652 165.942 41.7161 169.118 41.7161C172.293 41.7161 176.164 43.4598 180.166 46.5989L180.6 46.9481V39.972C180.6 39.972 175.685 37.3125 168.508 37.3125C165.202 37.3125 162.244 38.4898 160.156 40.6261C158.286 42.5445 157.285 45.1604 157.372 47.9071C157.459 55.0574 163.157 57.7608 168.16 60.1151C172.248 62.0771 175.773 63.7335 175.816 67.3522C175.816 68.8782 175.337 70.1862 174.336 71.1889C173.205 72.3225 171.597 72.9767 169.77 72.9767C165.942 72.9767 162.027 71.233 157.068 67.2654L156.588 66.8727V73.9357C156.588 73.9357 158.023 74.6773 158.502 74.8517H158.589C158.589 74.8517 164.202 77.1184 168.769 77.1184H168.812C168.812 77.1184 169.596 77.1184 169.944 77.1184C173.685 77.1184 176.989 75.8543 179.251 73.5871C181.252 71.5816 182.254 68.922 182.254 65.9136C182.124 58.9813 176.51 56.3656 171.552 54.0984L171.683 54.1857Z" fill="#F9F0E5"/>
+          <path d="M152.893 125.558C150.413 122.811 149.063 119.279 149.063 115.573V54.3161C149.063 41.3235 151.586 37.5305 151.586 37.5305H137.927C137.927 37.5305 140.712 40.0157 140.712 54.4906V112.041L73.4626 37.5305H69.9835H64.7203H52.9748L60.8037 46.2503C63.3267 49.0843 64.7203 52.7029 64.7203 56.496V114.483C64.7203 127.476 62.1971 131.269 62.1971 131.269H75.8542C75.8542 131.269 73.0718 128.784 73.0718 114.309V59.9405L137.101 131.269H158.069L152.893 125.514V125.558Z" fill="#F9F0E5"/>
+        </g>
+      </g>
+      <defs>
+        <filter id="shsh" x="0" y="0" width="214" height="241" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="bg"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a"/>
+          <feOffset dy="9"/><feGaussianBlur stdDeviation="4.5"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.059 0 0 0 0 0.031 0 0 0 0 0.11 0 0 0 0.18 0"/>
+          <feBlend mode="normal" in2="bg" result="e1"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a2"/>
+          <feOffset dy="20"/><feGaussianBlur stdDeviation="6"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.059 0 0 0 0 0.031 0 0 0 0 0.11 0 0 0 0.08 0"/>
+          <feBlend mode="normal" in2="e1" result="e2"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="e2"/>
+        </filter>
+      </defs>
+    </svg>
+  </div>
+
+</div>
+
+<script>
+/* scale stage to fit viewport (keeps pixel-perfect proportions, no adaptive layout) */
+function fit(){
+  const s = Math.min(window.innerWidth/1440, window.innerHeight/800);
+  document.documentElement.style.setProperty('--s', s);
+}
+fit(); addEventListener('resize', fit);
+
+/* ── the loop: 4 directions, ~5s each, smooth ── */
+const DIRS = [
+  { color:'#05323f', t1:'CITIES AND', t2:'COMMUNITIES' },
+  { color:'#503086', t1:'PUBLIC',      t2:'GOVERNANCE' },
+  { color:'#3b0142', t1:'BUSINESS',    t2:'SCHOOL' },
+  { color:'#5b4039', t1:'DIPLOMACY',   t2:'' },
+];
+const STEP = 5000;
+const hero = document.getElementById('hero');
+const stage = document.getElementById('stage');
+const titleEl = document.getElementById('title');
+const tiles = [...document.querySelectorAll('.tile')];
+let idx = 1; // старт на 02 Public Governance (як у макеті)
+
+function render(i, animateProgress){
+  const d = DIRS[i];
+  hero.style.backgroundColor = d.color;
+  stage.style.setProperty('--shield-dir', d.color);
+  // title crossfade
+  titleEl.style.opacity = 0;
+  setTimeout(()=>{ titleEl.innerHTML = d.t2 ? (d.t1+'<br>'+d.t2) : d.t1; titleEl.style.opacity = 1; }, 220);
+  // tiles: active gold progress fills 0→100% over STEP; others reset white
+  tiles.forEach((t,k)=>{
+    t.classList.toggle('active', k===i);
+    const p = t.querySelector('.progress');
+    p.style.transition = 'none';
+    p.style.width = '0%';
+    if(k===i){
+      // force reflow then animate
+      void p.offsetWidth;
+      p.style.transition = `width ${STEP}ms linear`;
+      p.style.width = '100%';
+    }
+  });
+}
+render(idx, true);
+setInterval(()=>{ idx = (idx+1) % DIRS.length; render(idx, true); }, STEP);
+</script>
+</body>
+</html>
