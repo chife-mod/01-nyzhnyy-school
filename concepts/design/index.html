@@ -154,45 +154,40 @@ const stage = document.getElementById('stage');
 const hero  = document.getElementById('hero');
 const tiles = [...document.querySelectorAll('.tile')];
 
-/* ── по-буквений КРОСФЕЙД: змінюються лише різні позиції — стара літера
-      гасне, на її місці проявляється нова (рандомний старт, без перебору) ── */
-function makeFader(el){
-  let cur = '', timers = [];
-  function build(text){                                 // нова фраза, кожна літера невидима
-    el.textContent = '';
-    for(const ch of text){
-      const sp = document.createElement('span'); sp.className = 'ch';
-      sp.textContent = ch === ' ' ? ' ' : ch;
-      sp.style.opacity = 0;
-      el.appendChild(sp);
-    }
-    return [...el.children];
+/* ── заголовок: проявлення СТРОГО в порядку читання — спершу весь верхній
+      рядок зліва-направо, потім нижній (нижній не може випередити верхній) ── */
+const tl1 = document.getElementById('tl1');
+const tl2 = document.getElementById('tl2');
+let titleTimers = [], titleInit = false;
+
+function buildLine(el, text){
+  el.textContent = '';
+  for(const ch of text){
+    const sp = document.createElement('span'); sp.className = 'ch';
+    sp.textContent = ch === ' ' ? ' ' : ch;
+    sp.style.opacity = 0;
+    el.appendChild(sp);
   }
-  function fadeIn(spans, base){
-    void el.offsetWidth;                                 // reflow -> transition спрацює з 0
-    spans.forEach(sp=>{ timers.push(setTimeout(()=>{ sp.style.opacity = 1; }, (base||0) + Math.random() * 320)); });
-  }
-  function set(text, base){                              // base = зсув рядка (верхній веде)
-    base = base || 0;
-    timers.forEach(clearTimeout); timers = [];
-    if(cur === ''){ cur = text; fadeIn(build(text), base); return; }      // перший показ
-    cur = text;
-    // фаза 1: стара фраза гасне по літерах (розкладка стабільна)
-    [...el.children].forEach(sp=>{ timers.push(setTimeout(()=>{ sp.style.opacity = 0; }, base + Math.random() * 320)); });
-    // фаза 2: коли все невидиме - підміна на нову й проявлення по літерах
-    timers.push(setTimeout(()=>{ fadeIn(build(text)); }, base + 1250));
-  }
-  return { set };
+  return [...el.children];
 }
 
-const S1 = makeFader(document.getElementById('tl1'));
-const S2 = makeFader(document.getElementById('tl2'));
+function setTitle(l1, l2){
+  titleTimers.forEach(clearTimeout); titleTimers = [];
+  const reveal = ()=>{
+    const seq = [...buildLine(tl1, l1), ...buildLine(tl2, l2)];   // порядок: весь рядок1, потім рядок2
+    void tl1.offsetWidth;                                          // reflow -> transition з 0
+    seq.forEach((sp,i)=>{ titleTimers.push(setTimeout(()=>{ sp.style.opacity = 1; }, i * 45)); });
+  };
+  if(!titleInit){ titleInit = true; reveal(); return; }            // перший показ
+  [...tl1.children, ...tl2.children].forEach(sp=>{ sp.style.opacity = 0; });   // вся фраза гасне разом
+  titleTimers.push(setTimeout(reveal, 950));                                    // після згасання — нова в порядку
+}
 
 function render(i){
   const d = DIRS[i];
   hero.style.backgroundColor = d.color;
   stage.style.setProperty('--shield-dir', d.color);
-  S1.set(d.t1, 0); S2.set(d.t2, 350);   // верхній рядок веде, нижній +350мс
+  setTitle(d.t1, d.t2);
   tiles.forEach((t,k)=>{
     t.classList.toggle('active', k === i);
     const p = t.querySelector('.progress');
