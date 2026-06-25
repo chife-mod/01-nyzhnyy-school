@@ -9,9 +9,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
+/* Majesty (Medium) — self-host, щоб гарантовано грузився на GitHub Pages.
+   Ліцензія шрифту: Free for Personal Use → для бойового сайту клієнта придбати ліцензію. */
+@font-face{
+  font-family:'Majesty';
+  src:url('assets/fonts/majesty-medium.woff2') format('woff2'),
+      url('assets/fonts/majesty-medium.woff') format('woff'),
+      url('assets/fonts/majesty-medium.otf') format('opentype');
+  font-weight:400 700; font-style:normal; font-display:swap;
+}
 :root{
   --gold:#b89362;
-  --serif:'Playfair Display', Georgia, serif;   /* стенд-ін serif заголовка — реальний шрифт клієнт ще шукає */
+  --serif:'Majesty', 'Playfair Display', Georgia, serif;   /* serif заголовка/лейблів — Majesty Medium */
   --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif;
   --s:1;
 }
@@ -42,7 +51,7 @@ nav a{font-size:16px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
 .lang{position:absolute;top:35px;left:656px;z-index:4;font-size:16px;letter-spacing:.5px;color:#fff;border-bottom:2px solid var(--gold);padding-bottom:3px;}
 
 /* заголовок serif — праворуч від щита (153,293), по-буквений fade-морфінг */
-.title{position:absolute;left:153px;top:293px;z-index:3;font-family:var(--serif);font-weight:700;font-size:50px;letter-spacing:.5px;color:#fff;text-transform:uppercase;}
+.title{position:absolute;left:151px;top:289px;z-index:3;font-family:var(--serif);font-weight:500;font-size:48px;letter-spacing:.5px;color:#fff;text-transform:uppercase;}
 .title .tline{white-space:nowrap;height:43px;line-height:43px;}
 .title .ch{display:inline-block;opacity:0;transition:opacity .3s ease;will-change:opacity;}
 .title .ch.sp{width:.28em;}
@@ -54,13 +63,9 @@ nav a{font-size:16px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
 .tile .topbar{position:absolute;top:0;left:0;width:100%;height:8px;background:#fff;z-index:1;}
 .tile .progress{position:absolute;top:0;left:0;height:8px;width:0;background:var(--gold);z-index:2;}
 .tile .num{position:absolute;top:14px;right:8px;font-size:12px;color:#fff;opacity:.5;}
-/* лейбли = точні Figma-SVG як CSS-маска (геометрія з файлу), колір через bg */
-.tile .label{position:absolute;left:24px;bottom:24px;background:var(--gold);transition:background-color .8s ease;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;}
-.tile.active .label{background:#fff;}
-.l-cities{width:110.825px;height:29px;-webkit-mask-image:url(assets/label1-cities.svg);mask-image:url(assets/label1-cities.svg);}
-.l-public{width:109.093px;height:29px;-webkit-mask-image:url(assets/label2-public.svg);mask-image:url(assets/label2-public.svg);}
-.l-business{width:72.518px;height:29px;-webkit-mask-image:url(assets/label3-business.svg);mask-image:url(assets/label3-business.svg);}
-.l-diplomacy{width:92.299px;height:12.07px;-webkit-mask-image:url(assets/label4-diplomacy.svg);mask-image:url(assets/label4-diplomacy.svg);}
+/* лейбли напрямів — живий текст Majesty (як у новому макеті), gold↔white */
+.tile .label{position:absolute;left:16px;bottom:16px;font-family:var(--serif);font-weight:500;font-size:16px;line-height:1;letter-spacing:.01em;text-transform:uppercase;color:var(--gold);transition:color .8s ease;}
+.tile.active .label{color:#fff;}
 
 /* ── shield — точна позиція групи (627,256) 186×188, тінь оверфлоу ── */
 .shield{position:absolute;left:627px;top:256px;width:186px;height:188px;z-index:10;}
@@ -92,10 +97,10 @@ nav a{font-size:16px;letter-spacing:.5px;color:#fff;text-decoration:none;opacity
     </div>
 
     <div class="tiles">
-      <div class="tile t-cities"    data-i="0"><span class="topbar"></span><span class="progress"></span><span class="num">01</span><div class="label l-cities"></div></div>
-      <div class="tile t-public"    data-i="1"><span class="topbar"></span><span class="progress"></span><span class="num">02</span><div class="label l-public"></div></div>
-      <div class="tile t-business"  data-i="2"><span class="topbar"></span><span class="progress"></span><span class="num">03</span><div class="label l-business"></div></div>
-      <div class="tile t-diplomacy" data-i="3"><span class="topbar"></span><span class="progress"></span><span class="num">04</span><div class="label l-diplomacy"></div></div>
+      <div class="tile t-cities"    data-i="0"><span class="topbar"></span><span class="progress"></span><span class="num">01</span><div class="label">Cities and<br>Communities</div></div>
+      <div class="tile t-public"    data-i="1"><span class="topbar"></span><span class="progress"></span><span class="num">02</span><div class="label">Public<br>Governance</div></div>
+      <div class="tile t-business"  data-i="2"><span class="topbar"></span><span class="progress"></span><span class="num">03</span><div class="label">Business<br>School</div></div>
+      <div class="tile t-diplomacy" data-i="3"><span class="topbar"></span><span class="progress"></span><span class="num">04</span><div class="label">Diplomacy</div></div>
     </div>
   </div>
 
