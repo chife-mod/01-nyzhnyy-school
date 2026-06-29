@@ -28,10 +28,20 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 .col{left:720px;top:249px;width:414px;display:flex;flex-direction:column;gap:32px;transition-delay:.12s;}
 .t-multi{font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
 .sub{font-weight:400;font-size:18px;line-height:1.4;}
-.cta{display:flex;align-items:center;gap:8px;}
-.pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;cursor:pointer;}
-.circle{background:#000;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer;}
-.circle svg{width:24px;height:24px;display:block;}
+.cta{display:flex;align-items:center;cursor:pointer;}
+.pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;flex:0 0 auto;}
+/* кола: при ховері правий схлопується в 0, лівий росте з 0 → виштовхує пілюлю вправо */
+.circ{flex:0 0 auto;height:44px;display:flex;align-items:center;overflow:visible;transition:width .55s cubic-bezier(.7,0,.2,1);}
+.circ-l{width:0;justify-content:flex-start;}
+.circ-r{width:52px;justify-content:flex-end;}
+.circ-b{width:44px;height:44px;flex:0 0 auto;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
+.circ-l .circ-b{transform:scale(0);}
+.circ-r .circ-b{transform:scale(1);}
+.cta:hover .circ-l{width:52px;}
+.cta:hover .circ-r{width:0;}
+.cta:hover .circ-l .circ-b{transform:scale(1);}
+.cta:hover .circ-r .circ-b{transform:scale(0);}
+.circ-b svg{width:24px;height:24px;display:block;}
 </style>
 </head>
 <body>
@@ -45,10 +55,9 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
     <div class="t-multi">Multiple<br>Directions.</div>
     <div class="sub">Education, diplomacy, public governance, business and community initiatives connected by a shared mission.</div>
     <div class="cta">
+      <span class="circ circ-l"><span class="circ-b"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></span></span>
       <div class="pill">Explore the Ecosystem</div>
-      <div class="circle" aria-label="scroll down">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-      </div>
+      <span class="circ circ-r"><span class="circ-b"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></span></span>
     </div>
   </div>
 </div>
@@ -62,7 +71,8 @@ const stage = document.getElementById('stage');
 
 /* пул фото */
 const N = 20;
-const POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.jpg`);
+let FMT = 'jpg';
+let POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.jpg`);
 let bag = [];
 function nextPhoto(){
   if(!bag.length){ bag = [...POOL]; for(let i=bag.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [bag[i],bag[j]]=[bag[j],bag[i]]; } }
@@ -122,7 +132,16 @@ function makeSlot(sl, i){
   setTimeout(cycle, 700 + i*650);                          // стартовий стаггер
 }
 
-SLOTS.forEach(makeSlot);
+/* формат фото: AVIF → WebP → JPG (одна детекція, потім будуємо слоти) */
+const AVIF_TEST="data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUEAAADrbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAETAAAAHQAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAgAAAAIAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBIAAAAAAAE2NvbHJuY2x4AAEADQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAJW1kYXQSAAoHOAA2kBDQaTIQGUJjBMPPPPNBIACQQRHSgA==";
+const WEBP_TEST="data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==";
+function canDecode(uri){ return new Promise(r=>{ const im=new Image(); im.onload=()=>r(im.width>0); im.onerror=()=>r(false); im.src=uri; }); }
+(async()=>{
+  if(await canDecode(AVIF_TEST)) FMT='avif';
+  else if(await canDecode(WEBP_TEST)) FMT='webp';
+  POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.${FMT}`);
+  SLOTS.forEach(makeSlot);
+})();
 
 /* текст проявляється першим (shun-shun), потім летять фото */
 setTimeout(()=> stage.classList.add('ready'), 80);
