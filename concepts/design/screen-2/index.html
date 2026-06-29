@@ -35,8 +35,8 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 .circ-l{width:0;justify-content:flex-start;}
 .circ-r{width:44px;justify-content:flex-end;}
 .circ-b{width:44px;height:44px;flex:0 0 auto;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
-.circ-l .circ-b{transform:scale(0);}
-.circ-r .circ-b{transform:scale(1);}
+.circ-l .circ-b{transform:scale(0);transform-origin:left center;}   /* росте від лівого краю — не заходить на пілюлю */
+.circ-r .circ-b{transform:scale(1);transform-origin:right center;}  /* схлопується до правого краю — не заходить на пілюлю */
 .circ-l .circ-b svg{stroke:var(--purple);}     /* ліва стрілка — фіолетова */
 .cta:hover .circ-l{width:44px;}
 .cta:hover .circ-r{width:0;}
