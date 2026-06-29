@@ -94,8 +94,8 @@ function reset(p, initial){
   p.src = nextPhoto(used);
   p.img.src = p.src;
   p.base = 120 + Math.random()*72;                                  // 120–192
-  p.y = initial ? (Math.random()*960 - 80) : (820 + Math.random()*340);
-  p.speed = 46 + Math.random()*30;                                  // px/с угору
+  p.y = initial ? (Math.random()*960 - 80) : (840 + Math.random()*460);   // нижче вʼюпорту — встигає розвестись до появи
+  p.speed = 58;                                                     // ОДНАКОВА швидкість → фото не наздоганяють одне одного (без ривків у виду)
   // x: з 10 спроб беремо найдальшу від інших → менше клумпінгу (push-apart майже не треба)
   let bestX = 16 + Math.random()*(1440-32-p.base), best = -1;
   for(let t=0;t<10;t++){
@@ -122,9 +122,10 @@ function place(p){
   p.el.style.opacity = op;
 }
 /* Push Apart: розштовхуємо фото по X, щоб перекриття двох було ≤30% (без потрійних стопок) */
-function separate(strength, maxShift){
+function separate(strength, maxShift, belowOnly){
   for(let a=0;a<stream.length;a++) for(let b=a+1;b<stream.length;b++){
     const A=stream[a], B=stream[b];
+    if(belowOnly && (A.y < 800 || B.y < 800)) continue;            // не штовхати видимі — тільки нижче вʼюпорту
     const aS=A.base*scaleAt(A.y), bS=B.base*scaleAt(B.y), half=(aS+bS)/2;
     const acx=A.x+A.base/2, bcx=B.x+B.base/2;
     const ox=half-Math.abs(acx-bcx);
@@ -141,7 +142,7 @@ function separate(strength, maxShift){
 }
 function tick(dt){
   for(const p of stream){ p.y -= p.speed*dt; if(p.y < -p.base) reset(p); }
-  separate(0.5, 1); separate(0.5, 1);                              // макс 1px/виклик → плавно, без ривків
+  separate(0.5, 0.8, true); separate(0.5, 0.8, true);              // тільки нижче вʼюпорту → видимі фото не дёргаються
   for(const p of stream) place(p);
 }
 let last=0;
@@ -156,7 +157,7 @@ function canDecode(uri){ return new Promise(r=>{ const im=new Image(); im.onload
   else if(await canDecode(WEBP_TEST)) FMT='webp';
   POOL = buildPool();
   for(let i=0;i<9;i++) makePhoto(true);                             // 9 фото — потік
-  for(let i=0;i<30;i++) separate(1, 9999);                          // розвести стартові позиції (без кепу — до відмальовки)
+  for(let i=0;i<30;i++) separate(1, 9999, false);                   // розвести ВСІ стартові позиції (до відмальовки, без ривків)
   stream.forEach(place);                                            // перший кадр
   last = performance.now(); setInterval(loop, 16);                  // ~60fps, dt-based (рівна швидкість)
 })();
