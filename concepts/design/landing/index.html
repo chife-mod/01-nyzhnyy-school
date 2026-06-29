@@ -7,19 +7,17 @@
 <title>Школа Нижнього — лендинг (екран 1 + 2)</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+/* кожен екран = повний вʼюпорт (fit з білими полями = шов сцени).
+   mandatory-snap + snap-stop:always → при скролі другий екран так само
+   стає на ВЕСЬ екран; на стику залипнути не можна → розграничувача нема. */
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;}
 html,body{background:#fff;width:100%;overflow-x:hidden;}
-/* ЄДИНИЙ відступ скрізь = внутрішньому шву сцени (8px при базі 1440).
-   T = 100vw/182 → це РІВНО 8px × масштаб сцени, тож боки, верх, низ і
-   проміжок між екранами однакові й збігаються зі швами всередині макета. */
-.deck{--T:calc(100vw / 182);padding:var(--T);display:flex;flex-direction:column;gap:var(--T);}
-/* кожен екран = сцена 1440×800; ширина по доступному, висота за пропорцією → 0 letterbox всередині */
-.frame{width:100%;aspect-ratio:1440 / 800;border:0;display:block;background:#fff;}
+.section{position:relative;width:100%;height:100vh;scroll-snap-align:start;scroll-snap-stop:always;}
+.section iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#fff;}
 </style>
 </head>
 <body>
-  <div class="deck">
-    <iframe class="frame" src="../?v=2" title="Екран 1 — головний" loading="eager"></iframe>
-    <iframe class="frame" src="../screen-2/?v=2" title="Екран 2 — One Vision" loading="eager"></iframe>
-  </div>
+  <div class="section"><iframe src="../?v=3" title="Екран 1 — головний" loading="eager"></iframe></div>
+  <div class="section"><iframe src="../screen-2/?v=3" title="Екран 2 — One Vision" loading="eager"></iframe></div>
 </body>
 </html>
