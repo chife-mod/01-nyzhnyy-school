@@ -17,26 +17,26 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 /* фікс-сцена 1440×800, масштаб під вʼюпорт (як на екрані 1) */
 .stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;overflow:hidden;flex:0 0 auto;}
 
-/* ── фото-потік знизу вгору. z=10: над сабтекстом(5), ПІД заголовком(20) і кнопкою(30) ── */
-.photo{position:absolute;left:0;top:0;overflow:hidden;opacity:0;z-index:10;pointer-events:none;will-change:transform,opacity;transform-origin:center center;}
+/* ── фото-потік знизу вгору. z 5/20: і ПІД, і НАД текстом (вперемішку); кнопка(30) завжди зверху ── */
+.photo{position:absolute;left:0;top:0;overflow:hidden;opacity:0;pointer-events:none;will-change:transform,opacity;transform-origin:center center;}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;}
 
-/* ── текст: fade-проявлення; різні z-шари (фото перетинають по-різному) ── */
+/* ── текст: fade; усі z=10 (фото йдуть і за, і перед — вперемішку), кнопка вище (30) ── */
 .txt{position:absolute;color:#000;opacity:0;transition:opacity 1s ease;}
 .stage.ready .txt{opacity:1;}
-.t-one{left:283px;top:168px;z-index:20;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;white-space:nowrap;}   /* заголовок — НАД фото */
+.t-one{left:283px;top:168px;z-index:10;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;white-space:nowrap;}
 .col{left:720px;top:249px;width:414px;display:flex;flex-direction:column;gap:32px;transition-delay:.12s;}
-.t-multi{position:relative;z-index:20;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}                        /* заголовок — НАД фото */
-.sub{position:relative;z-index:5;font-weight:400;font-size:18px;line-height:1.4;}                                                  /* сабтекст — ПІД фото */
-.cta{position:relative;z-index:30;display:flex;align-items:center;cursor:pointer;}                                                 /* кнопка — над усім, інтерактивна */
+.t-multi{position:relative;z-index:10;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
+.sub{position:relative;z-index:10;font-weight:400;font-size:18px;line-height:1.4;}
+.cta{position:relative;z-index:30;display:flex;align-items:center;cursor:pointer;}                                                 /* кнопка — завжди зверху, інтерактивна */
 .pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;flex:0 0 auto;}
 /* кола впритул до пілюлі (без відступу). На ховері праве схлопується в 0, ліве росте з 0 → виштовхує пілюлю вправо */
-.circ{flex:0 0 auto;height:44px;display:flex;align-items:center;overflow:visible;transition:width .55s cubic-bezier(.7,0,.2,1);}
+.circ{flex:0 0 auto;height:44px;display:flex;align-items:center;overflow:hidden;transition:width .55s cubic-bezier(.7,0,.2,1);}
 .circ-l{width:0;justify-content:flex-start;}
 .circ-r{width:44px;justify-content:flex-end;}
 .circ-b{width:44px;height:44px;flex:0 0 auto;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
-.circ-l .circ-b{transform:scale(0);transform-origin:left center;}   /* росте від лівого краю — не заходить на пілюлю */
-.circ-r .circ-b{transform:scale(1);transform-origin:right center;}  /* схлопується до правого краю — не заходить на пілюлю */
+.circ-l .circ-b{transform:scale(0);}   /* center-origin: стрілка не зміщується; overflow:hidden обрізає вихід на пілюлю */
+.circ-r .circ-b{transform:scale(1);}
 .circ-l .circ-b svg{stroke:var(--purple);}     /* ліва стрілка — фіолетова */
 .cta:hover .circ-l{width:44px;}
 .cta:hover .circ-r{width:0;}
@@ -94,10 +94,19 @@ function reset(p, initial){
   p.src = nextPhoto(used);
   p.img.src = p.src;
   p.base = 120 + Math.random()*72;                                  // 120–192
-  p.x = 16 + Math.random()*(1440 - 32 - p.base);                    // по всій ширині (перетинають текст)
   p.y = initial ? (Math.random()*960 - 80) : (820 + Math.random()*340);
   p.speed = 46 + Math.random()*30;                                  // px/с угору
+  // x: з 10 спроб беремо найдальшу від інших → менше клумпінгу (push-apart майже не треба)
+  let bestX = 16 + Math.random()*(1440-32-p.base), best = -1;
+  for(let t=0;t<10;t++){
+    const cx = 16 + Math.random()*(1440-32-p.base);
+    let mind = 1e9;
+    for(const q of stream){ if(q!==p){ const d=Math.abs((cx+p.base/2)-(q.x+q.base/2)); if(d<mind) mind=d; } }
+    if(mind > best){ best = mind; bestX = cx; }
+  }
+  p.x = bestX;
   p.el.style.width = p.base+'px'; p.el.style.height = p.base+'px';
+  p.el.style.zIndex = Math.random()<0.5 ? 5 : 20;                   // і за(5), і перед(20) текстом — вперемішку
 }
 function makePhoto(initial){
   const el=document.createElement('div'); el.className='photo';
@@ -113,7 +122,7 @@ function place(p){
   p.el.style.opacity = op;
 }
 /* Push Apart: розштовхуємо фото по X, щоб перекриття двох було ≤30% (без потрійних стопок) */
-function separate(strength){
+function separate(strength, maxShift){
   for(let a=0;a<stream.length;a++) for(let b=a+1;b<stream.length;b++){
     const A=stream[a], B=stream[b];
     const aS=A.base*scaleAt(A.y), bS=B.base*scaleAt(B.y), half=(aS+bS)/2;
@@ -121,16 +130,18 @@ function separate(strength){
     const ox=half-Math.abs(acx-bcx);
     const oy=half-Math.abs((A.y+A.base/2)-(B.y+B.base/2));
     const allowed=OVERLAP*Math.min(aS,bS);
-    if(ox>0 && oy>0 && Math.min(ox,oy)>allowed){                    // перетин більший за дозволений
-      const shift=(ox-allowed)*0.5*strength, dir=(acx<=bcx)?1:-1;
-      A.x-=dir*shift; B.x+=dir*shift;                               // розводимо по горизонталі
+    if(ox>0 && oy>0 && Math.min(ox,oy)>allowed){
+      let shift=(ox-allowed)*0.5*strength;
+      if(shift>maxShift) shift=maxShift;                            // кеп → плавне розведення, без «тику»
+      const dir=(acx<=bcx)?1:-1;
+      A.x-=dir*shift; B.x+=dir*shift;
     }
   }
   for(const p of stream) p.x=Math.max(8, Math.min(1440-8-p.base, p.x));
 }
 function tick(dt){
   for(const p of stream){ p.y -= p.speed*dt; if(p.y < -p.base) reset(p); }
-  separate(0.5); separate(0.5);                                     // 2 ітерації push-apart/кадр
+  separate(0.5, 1); separate(0.5, 1);                              // макс 1px/виклик → плавно, без ривків
   for(const p of stream) place(p);
 }
 let last=0;
@@ -143,9 +154,9 @@ function canDecode(uri){ return new Promise(r=>{ const im=new Image(); im.onload
 (async()=>{
   if(await canDecode(AVIF_TEST)) FMT='avif';
   else if(await canDecode(WEBP_TEST)) FMT='webp';
-  POOL = buildPool(); bag = [];
+  POOL = buildPool();
   for(let i=0;i<9;i++) makePhoto(true);                             // 9 фото — потік
-  for(let i=0;i<30;i++) separate(1);                                // розвести стартові позиції (push-apart)
+  for(let i=0;i<30;i++) separate(1, 9999);                          // розвести стартові позиції (без кепу — до відмальовки)
   stream.forEach(place);                                            // перший кадр
   last = performance.now(); setInterval(loop, 16);                  // ~60fps, dt-based (рівна швидкість)
 })();
