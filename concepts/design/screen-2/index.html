@@ -28,7 +28,7 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 .col{left:720px;top:249px;width:414px;display:flex;flex-direction:column;gap:32px;transition-delay:.12s;}
 .t-multi{position:relative;z-index:10;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
 .sub{position:relative;z-index:10;font-weight:400;font-size:18px;line-height:1.4;}
-.cta{position:relative;z-index:30;display:inline-flex;align-items:center;cursor:pointer;}                                          /* кнопка — завжди зверху, інтерактивна */
+.cta{position:relative;z-index:30;display:inline-flex;align-items:center;align-self:flex-start;cursor:pointer;}                    /* align-self:flex-start — щоб колонка не розтягувала кнопку (інакше коло відлітає вправо) */
 /* пілюлю штовхають margin'и; кола — фікс-слоти absolute, тож зсуву ширини немає */
 .pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;margin-right:44px;transition:margin .55s cubic-bezier(.7,0,.2,1);}
 .cta:hover .pill{margin-left:44px;margin-right:0;}                  /* виштовхується вправо на 44 */
