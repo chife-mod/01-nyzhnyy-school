@@ -4,20 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Школа Нижнього — лендинг (екран 1 + 2)</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{background:#fff;width:100%;overflow-x:hidden;}
-/* Рамка і проміжки — РІВНО 8px скрізь (фікс, як у референсі joindawn.com):
-   8px зверху / знизу / боки + 8px між екранами. Перший екран = на всю висоту (100vh − рамка). */
-.deck{display:flex;flex-direction:column;gap:8px;padding:8px;}
-.frame{width:100%;height:calc(100vh - 16px);border:0;display:block;background:#fff;}
+/* ЄДИНИЙ відступ скрізь = внутрішньому шву сцени. T = 100vw/182 → рівно 8px×масштаб:
+   боки, верх, низ і проміжок між екранами однакові (на 1440 ≈ 7.9px). */
+.deck{--T:calc(100vw / 182);padding:var(--T);display:flex;flex-direction:column;gap:var(--T);}
+/* кожен екран = сцена 1440×800; ширина по доступному, висота за пропорцією → 0 letterbox всередині */
+.frame{width:100%;aspect-ratio:1440 / 800;border:0;display:block;background:#fff;}
 </style>
 </head>
 <body>
   <div class="deck">
-    <iframe class="frame" src="../?v=6" title="Екран 1 — головний" loading="eager"></iframe>
-    <iframe class="frame" src="../screen-2/?v=6" title="Екран 2 — One Vision" loading="eager"></iframe>
+    <iframe class="frame" src="../?v=10" title="Екран 1 — головний" loading="eager"></iframe>
+    <iframe class="frame" src="../screen-2/?v=10" title="Екран 2 — One Vision" loading="eager"></iframe>
   </div>
 </body>
 </html>

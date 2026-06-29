@@ -65,7 +65,7 @@ body{background:#fff;font-family:var(--sans);overflow:hidden;display:flex;align-
 
 <script>
 /* масштаб сцени під вʼюпорт */
-function fit(){ document.documentElement.style.setProperty('--s', Math.min(innerWidth/1440, innerHeight/800)); }
+function fit(){ document.documentElement.style.setProperty('--s', Math.min(innerWidth/1440, innerHeight/800)); }   // contain — вписуємо сцену повністю
 fit(); addEventListener('resize', fit);
 
 const stage = document.getElementById('stage');
