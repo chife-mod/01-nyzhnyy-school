@@ -28,18 +28,18 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 .col{left:720px;top:249px;width:414px;display:flex;flex-direction:column;gap:32px;transition-delay:.12s;}
 .t-multi{position:relative;z-index:10;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
 .sub{position:relative;z-index:10;font-weight:400;font-size:18px;line-height:1.4;}
-.cta{position:relative;z-index:30;display:flex;align-items:center;cursor:pointer;}                                                 /* кнопка — завжди зверху, інтерактивна */
-.pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;flex:0 0 auto;}
-/* кола впритул до пілюлі (без відступу). На ховері праве схлопується в 0, ліве росте з 0 → виштовхує пілюлю вправо */
-.circ{flex:0 0 auto;height:44px;display:flex;align-items:center;overflow:hidden;transition:width .55s cubic-bezier(.7,0,.2,1);}
-.circ-l{width:0;justify-content:flex-start;}
-.circ-r{width:44px;justify-content:flex-end;}
-.circ-b{width:44px;height:44px;flex:0 0 auto;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
-.circ-l .circ-b{transform:scale(0);}   /* center-origin: стрілка не зміщується; overflow:hidden обрізає вихід на пілюлю */
+.cta{position:relative;z-index:30;display:inline-flex;align-items:center;cursor:pointer;}                                          /* кнопка — завжди зверху, інтерактивна */
+/* пілюлю штовхають margin'и; кола — фікс-слоти absolute, тож зсуву ширини немає */
+.pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;margin-right:44px;transition:margin .55s cubic-bezier(.7,0,.2,1);}
+.cta:hover .pill{margin-left:44px;margin-right:0;}                  /* виштовхується вправо на 44 */
+/* кола — фікс-слоти зліва/справа, масштаб НА МІСЦІ (center-origin) → стрілка не зміщується, на пілюлю не заходить */
+.circ{position:absolute;top:0;width:44px;height:44px;}
+.circ-l{left:0;}
+.circ-r{right:0;}
+.circ-b{width:44px;height:44px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;transform-origin:center center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
+.circ-l .circ-b{transform:scale(0);}
 .circ-r .circ-b{transform:scale(1);}
 .circ-l .circ-b svg{stroke:var(--purple);}     /* ліва стрілка — фіолетова */
-.cta:hover .circ-l{width:44px;}
-.cta:hover .circ-r{width:0;}
 .cta:hover .circ-l .circ-b{transform:scale(1);}
 .cta:hover .circ-r .circ-b{transform:scale(0);}
 .circ-b svg{width:24px;height:24px;display:block;}
