@@ -12,7 +12,7 @@
 :root{ --s:1; --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif; --purple:#895FCF; }  /* стрілка ховера — точний фіолет з Figma */
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
-body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+body{background:#fff;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}   /* білий фон полів (letterbox) → стик з екраном 1 суцільно білий */
 
 /* фікс-сцена 1440×800, масштаб під вʼюпорт (як на екрані 1) */
 .stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;overflow:hidden;flex:0 0 auto;}

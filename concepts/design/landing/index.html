@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-snap-type:y proximity;scroll-behavior:smooth;}
-html,body{background:#0a0a0a;width:100%;overflow-x:hidden;}        /* width:100% (не 100vw) — без горизонт. скролу від смуги прокрутки */
+html,body{background:#fff;width:100%;overflow-x:hidden;}           /* білий фон полів → стик екранів суцільно білий, без чорної смуги; width:100% (не 100vw) — без горизонт. скролу */
 /* кожна секція = повний вʼюпорт; екран вписується (fit) з білими полями зверху і знизу */
 .section{position:relative;width:100%;height:100vh;scroll-snap-align:start;}
 .section iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;}
