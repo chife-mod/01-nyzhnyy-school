@@ -84,12 +84,14 @@ function nextPhoto(){
 /* ── ПОТІК знизу вгору: фото пливуть угору одним потоком, крупніші знизу /
       дрібніші вгорі, частина за текстом (z5), частина перед (z20) ── */
 const stream = [];
+const OVERLAP = 0.30;                                               // макс. перекриття двох фото
+function scaleAt(y){ return 0.46 + 0.54*Math.max(0, Math.min(1, y/800)); }   // менше вгорі
 function reset(p, initial){
   p.img.src = nextPhoto();
   p.base = 120 + Math.random()*72;                                  // 120–192
   p.x = 16 + Math.random()*(1440 - 32 - p.base);                    // по всій ширині (перетинають текст)
-  p.y = initial ? (Math.random()*960 - 80) : (820 + Math.random()*320);
-  p.speed = 40 + Math.random()*40;                                  // px/с угору
+  p.y = initial ? (Math.random()*960 - 80) : (820 + Math.random()*340);
+  p.speed = 46 + Math.random()*30;                                  // px/с угору
   p.el.style.width = p.base+'px'; p.el.style.height = p.base+'px';
   p.el.style.zIndex = Math.random()<0.5 ? 5 : 20;                   // за / перед текстом
 }
@@ -99,20 +101,33 @@ function makePhoto(initial){
   const p={el,img}; reset(p, initial); stream.push(p);
 }
 function place(p){
-  const k = Math.max(0, Math.min(1, p.y/800));                      // 1 знизу → 0 вгорі
-  const sc = 0.46 + 0.54*k;                                         // менше вгорі
+  const sc = scaleAt(p.y);
   let op = 1;
   if(p.y > 730) op = Math.max(0, (800 - p.y)/70);                   // проявлення знизу
   else if(p.y < 80) op = Math.max(0, (p.y + p.base*sc)/(80 + p.base*sc)); // згасання вгорі
   p.el.style.transform = `translate(${p.x}px,${p.y}px) scale(${sc})`;
   p.el.style.opacity = op;
 }
-function tick(dt){
-  for(const p of stream){
-    p.y -= p.speed*dt;
-    if(p.y < -p.base) reset(p);                                     // рецикл знизу
-    place(p);
+/* Push Apart: розштовхуємо фото по X, щоб перекриття двох було ≤30% (без потрійних стопок) */
+function separate(strength){
+  for(let a=0;a<stream.length;a++) for(let b=a+1;b<stream.length;b++){
+    const A=stream[a], B=stream[b];
+    const aS=A.base*scaleAt(A.y), bS=B.base*scaleAt(B.y), half=(aS+bS)/2;
+    const acx=A.x+A.base/2, bcx=B.x+B.base/2;
+    const ox=half-Math.abs(acx-bcx);
+    const oy=half-Math.abs((A.y+A.base/2)-(B.y+B.base/2));
+    const allowed=OVERLAP*Math.min(aS,bS);
+    if(ox>0 && oy>0 && Math.min(ox,oy)>allowed){                    // перетин більший за дозволений
+      const shift=(ox-allowed)*0.5*strength, dir=(acx<=bcx)?1:-1;
+      A.x-=dir*shift; B.x+=dir*shift;                               // розводимо по горизонталі
+    }
   }
+  for(const p of stream) p.x=Math.max(8, Math.min(1440-8-p.base, p.x));
+}
+function tick(dt){
+  for(const p of stream){ p.y -= p.speed*dt; if(p.y < -p.base) reset(p); }
+  separate(0.5); separate(0.5);                                     // 2 ітерації push-apart/кадр
+  for(const p of stream) place(p);
 }
 let last=0;
 function loop(){ const now=performance.now(); const dt = last ? Math.min(0.05,(now-last)/1000) : 0; last=now; tick(dt); }
@@ -125,8 +140,9 @@ function canDecode(uri){ return new Promise(r=>{ const im=new Image(); im.onload
   if(await canDecode(AVIF_TEST)) FMT='avif';
   else if(await canDecode(WEBP_TEST)) FMT='webp';
   POOL = buildPool(); bag = [];
-  for(let i=0;i<11;i++) makePhoto(true);                            // 11 фото — потік, не стіна
-  stream.forEach(place);                                            // перший кадр одразу
+  for(let i=0;i<9;i++) makePhoto(true);                             // 9 фото — потік
+  for(let i=0;i<30;i++) separate(1);                                // розвести стартові позиції (push-apart)
+  stream.forEach(place);                                            // перший кадр
   last = performance.now(); setInterval(loop, 16);                  // ~60fps, dt-based (рівна швидкість)
 })();
 
