@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Школа Нижнього — екран 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{ --s:1; --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+
+/* фікс-сцена 1440×800, масштаб під вʼюпорт (як на екрані 1) */
+.stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;overflow:hidden;flex:0 0 auto;}
+
+/* ── фото-шар: летять по периметру, центр чистий ── */
+.photo{position:absolute;overflow:hidden;opacity:0;will-change:transform,opacity;}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* ── текст (zіндекс між фото-задніми(6) і фото-передніми(14)) ── */
+.txt{position:absolute;z-index:10;color:#000;opacity:0;transition:opacity 1s ease, transform 1s cubic-bezier(.22,1,.36,1);transform:translateY(14px);}
+.stage.ready .txt{opacity:1;transform:translateY(0);}
+.t-one{left:283px;top:168px;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;white-space:nowrap;}
+.col{left:720px;top:249px;width:414px;display:flex;flex-direction:column;gap:32px;transition-delay:.12s;}
+.t-multi{font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;}
+.sub{font-weight:400;font-size:18px;line-height:1.4;}
+.cta{display:flex;align-items:center;gap:8px;}
+.pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;cursor:pointer;}
+.circle{background:#000;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;cursor:pointer;}
+.circle svg{width:24px;height:24px;display:block;}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <!-- фото-слоти створюються в JS -->
+
+  <!-- текст -->
+  <div class="txt t-one">One Vision.</div>
+  <div class="txt col">
+    <div class="t-multi">Multiple<br>Directions.</div>
+    <div class="sub">Education, diplomacy, public governance, business and community initiatives connected by a shared mission.</div>
+    <div class="cta">
+      <div class="pill">Explore the Ecosystem</div>
+      <div class="circle" aria-label="scroll down">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* масштаб сцени під вʼюпорт */
+function fit(){ document.documentElement.style.setProperty('--s', Math.min(innerWidth/1440, innerHeight/800)); }
+fit(); addEventListener('resize', fit);
+
+const stage = document.getElementById('stage');
+
+/* пул фото */
+const N = 20;
+const POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.jpg`);
+let bag = [];
+function nextPhoto(){
+  if(!bag.length){ bag = [...POOL]; for(let i=bag.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [bag[i],bag[j]]=[bag[j],bag[i]]; } }
+  return bag.pop();
+}
+
+/* слоти = 7 позицій спокою з макета (1:1): {x,y,розмір, край-входу, z-шар} */
+const SLOTS = [
+  { x:80,   y:604, s:136, from:'b', z:6  },   // ліво-низ, ЗА текстом
+  { x:1091, y:597, s:136, from:'b', z:14 },   // право-низ, ПЕРЕД
+  { x:349,  y:415, s:117, from:'l', z:14 },   // ліво-центр, ПЕРЕД
+  { x:978,  y:125, s:117, from:'t', z:6  },   // право-верх, ЗА
+  { x:189,  y:328, s:77,  from:'l', z:6  },   // ліво, ЗА
+  { x:1163, y:49,  s:64,  from:'t', z:14 },   // право-верх, ПЕРЕД
+  { x:48,   y:35,  s:64,  from:'t', z:14 },   // ліво-верх, ПЕРЕД
+];
+
+/* зсув входу/виходу за межу екрана (звідки фото залітає) */
+function edgeOffset(sl){
+  switch(sl.from){
+    case 'l': return { x:-(sl.x + sl.s + 40), y: 0 };
+    case 'r': return { x:(1440 - sl.x + 40),  y: 0 };
+    case 't': return { x: 0, y:-(sl.y + sl.s + 40) };
+    default : return { x: 0, y:(800 - sl.y + 40) };   // 'b'
+  }
+}
+
+function makeSlot(sl, i){
+  const el = document.createElement('div');
+  el.className = 'photo';
+  el.style.left = sl.x+'px'; el.style.top = sl.y+'px';
+  el.style.width = sl.s+'px'; el.style.height = sl.s+'px';
+  el.style.zIndex = sl.z;
+  const img = document.createElement('img'); el.appendChild(img);
+  stage.appendChild(el);
+
+  const off = edgeOffset(sl);
+  // лёгкий дрейф під час показу (унікальний на слот, малий — центр лишається чистим)
+  const drift = { x: (i%2?1:-1)*22, y: (i%3?-1:1)*16 };
+  const HOLD = 5200 + i*450;        // різна тривалість показу → десинхрон
+
+  function cycle(){
+    img.src = nextPhoto();
+    el.style.transition = 'none';
+    el.style.transform = `translate(${off.x}px,${off.y}px) scale(.9)`;
+    el.style.opacity = '0';
+    void el.offsetWidth;                                   // reflow
+    el.style.transition = 'transform 1.4s cubic-bezier(.22,1,.36,1), opacity 1s ease';
+    el.style.transform = 'translate(0,0) scale(1)';
+    el.style.opacity = '1';
+    setTimeout(()=>{ el.style.transition='transform 6s linear'; el.style.transform=`translate(${drift.x}px,${drift.y}px) scale(1)`; }, 1500);
+    setTimeout(()=>{ el.style.transition='transform 1.4s cubic-bezier(.4,0,1,.4), opacity 1.1s ease';
+                     el.style.transform=`translate(${drift.x*1.8 + off.x*0.35}px,${drift.y*1.8 + off.y*0.35}px) scale(.92)`;
+                     el.style.opacity='0'; }, HOLD);
+    setTimeout(cycle, HOLD + 1500);
+  }
+  setTimeout(cycle, 700 + i*650);                          // стартовий стаггер
+}
+
+SLOTS.forEach(makeSlot);
+
+/* текст проявляється першим (shun-shun), потім летять фото */
+setTimeout(()=> stage.classList.add('ready'), 80);
+</script>
+</body>
+</html>
