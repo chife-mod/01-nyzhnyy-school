@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{ --s:1; --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif; }
+:root{ --s:1; --sans:'Euclid Circular A','Inter',system-ui,-apple-system,sans-serif; --purple:#503086; }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;align-items:center;justify-content:center;}
@@ -17,11 +17,11 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 /* фікс-сцена 1440×800, масштаб під вʼюпорт (як на екрані 1) */
 .stage{width:1440px;height:800px;position:relative;transform:scale(var(--s));transform-origin:center center;background:#fff;overflow:hidden;flex:0 0 auto;}
 
-/* ── фото-шар: летять по периметру, центр чистий ── */
-.photo{position:absolute;overflow:hidden;opacity:0;will-change:transform,opacity;}
+/* ── фото-потік: один потік знизу вгору, за/перед текстом ── */
+.photo{position:absolute;left:0;top:0;overflow:hidden;opacity:0;will-change:transform,opacity;transform-origin:center center;}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;}
 
-/* ── текст (zіндекс між фото-задніми(6) і фото-передніми(14)) ── */
+/* ── текст (z=10: фото йдуть і за(5), і перед(20)) ── */
 .txt{position:absolute;z-index:10;color:#000;opacity:0;transition:opacity 1s ease, transform 1s cubic-bezier(.22,1,.36,1);transform:translateY(14px);}
 .stage.ready .txt{opacity:1;transform:translateY(0);}
 .t-one{left:283px;top:168px;font-weight:500;font-size:88px;line-height:.9;letter-spacing:-3.52px;white-space:nowrap;}
@@ -30,14 +30,15 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 .sub{font-weight:400;font-size:18px;line-height:1.4;}
 .cta{display:flex;align-items:center;cursor:pointer;}
 .pill{background:#000;color:#fff;border-radius:100px;padding:12px 24px;font-weight:400;font-size:14px;line-height:1.4;white-space:nowrap;flex:0 0 auto;}
-/* кола: при ховері правий схлопується в 0, лівий росте з 0 → виштовхує пілюлю вправо */
+/* кола впритул до пілюлі (без відступу). На ховері праве схлопується в 0, ліве росте з 0 → виштовхує пілюлю вправо */
 .circ{flex:0 0 auto;height:44px;display:flex;align-items:center;overflow:visible;transition:width .55s cubic-bezier(.7,0,.2,1);}
 .circ-l{width:0;justify-content:flex-start;}
-.circ-r{width:52px;justify-content:flex-end;}
+.circ-r{width:44px;justify-content:flex-end;}
 .circ-b{width:44px;height:44px;flex:0 0 auto;background:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .55s cubic-bezier(.7,0,.2,1);}
 .circ-l .circ-b{transform:scale(0);}
 .circ-r .circ-b{transform:scale(1);}
-.cta:hover .circ-l{width:52px;}
+.circ-l .circ-b svg{stroke:var(--purple);}     /* ліва стрілка — фіолетова */
+.cta:hover .circ-l{width:44px;}
 .cta:hover .circ-r{width:0;}
 .cta:hover .circ-l .circ-b{transform:scale(1);}
 .cta:hover .circ-r .circ-b{transform:scale(0);}
@@ -47,7 +48,7 @@ body{background:#0a0a0a;font-family:var(--sans);overflow:hidden;display:flex;ali
 <body>
 
 <div class="stage" id="stage">
-  <!-- фото-слоти створюються в JS -->
+  <!-- фото-потік створюється в JS -->
 
   <!-- текст -->
   <div class="txt t-one">One Vision.</div>
@@ -69,81 +70,67 @@ fit(); addEventListener('resize', fit);
 
 const stage = document.getElementById('stage');
 
-/* пул фото */
+/* пул фото (формат обираємо нижче: AVIF → WebP → JPG) */
 const N = 20;
 let FMT = 'jpg';
-let POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.jpg`);
+function buildPool(){ return Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.${FMT}`); }
+let POOL = buildPool();
 let bag = [];
 function nextPhoto(){
   if(!bag.length){ bag = [...POOL]; for(let i=bag.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [bag[i],bag[j]]=[bag[j],bag[i]]; } }
   return bag.pop();
 }
 
-/* слоти = 7 позицій спокою з макета (1:1): {x,y,розмір, край-входу, z-шар} */
-const SLOTS = [
-  { x:80,   y:604, s:136, from:'b', z:6  },   // ліво-низ, ЗА текстом
-  { x:1091, y:597, s:136, from:'b', z:14 },   // право-низ, ПЕРЕД
-  { x:349,  y:415, s:117, from:'l', z:14 },   // ліво-центр, ПЕРЕД
-  { x:978,  y:125, s:117, from:'t', z:6  },   // право-верх, ЗА
-  { x:189,  y:328, s:77,  from:'l', z:6  },   // ліво, ЗА
-  { x:1163, y:49,  s:64,  from:'t', z:14 },   // право-верх, ПЕРЕД
-  { x:48,   y:35,  s:64,  from:'t', z:14 },   // ліво-верх, ПЕРЕД
-];
-
-/* зсув входу/виходу за межу екрана (звідки фото залітає) */
-function edgeOffset(sl){
-  switch(sl.from){
-    case 'l': return { x:-(sl.x + sl.s + 40), y: 0 };
-    case 'r': return { x:(1440 - sl.x + 40),  y: 0 };
-    case 't': return { x: 0, y:-(sl.y + sl.s + 40) };
-    default : return { x: 0, y:(800 - sl.y + 40) };   // 'b'
+/* ── ПОТІК знизу вгору: фото пливуть угору одним потоком, крупніші знизу /
+      дрібніші вгорі, частина за текстом (z5), частина перед (z20) ── */
+const stream = [];
+function reset(p, initial){
+  p.img.src = nextPhoto();
+  p.base = 120 + Math.random()*72;                                  // 120–192
+  p.x = 16 + Math.random()*(1440 - 32 - p.base);                    // по всій ширині (перетинають текст)
+  p.y = initial ? (Math.random()*960 - 80) : (820 + Math.random()*320);
+  p.speed = 40 + Math.random()*40;                                  // px/с угору
+  p.el.style.width = p.base+'px'; p.el.style.height = p.base+'px';
+  p.el.style.zIndex = Math.random()<0.5 ? 5 : 20;                   // за / перед текстом
+}
+function makePhoto(initial){
+  const el=document.createElement('div'); el.className='photo';
+  const img=document.createElement('img'); el.appendChild(img); stage.appendChild(el);
+  const p={el,img}; reset(p, initial); stream.push(p);
+}
+function place(p){
+  const k = Math.max(0, Math.min(1, p.y/800));                      // 1 знизу → 0 вгорі
+  const sc = 0.46 + 0.54*k;                                         // менше вгорі
+  let op = 1;
+  if(p.y > 730) op = Math.max(0, (800 - p.y)/70);                   // проявлення знизу
+  else if(p.y < 80) op = Math.max(0, (p.y + p.base*sc)/(80 + p.base*sc)); // згасання вгорі
+  p.el.style.transform = `translate(${p.x}px,${p.y}px) scale(${sc})`;
+  p.el.style.opacity = op;
+}
+function tick(dt){
+  for(const p of stream){
+    p.y -= p.speed*dt;
+    if(p.y < -p.base) reset(p);                                     // рецикл знизу
+    place(p);
   }
 }
+let last=0;
+function loop(){ const now=performance.now(); const dt = last ? Math.min(0.05,(now-last)/1000) : 0; last=now; tick(dt); }
 
-function makeSlot(sl, i){
-  const el = document.createElement('div');
-  el.className = 'photo';
-  el.style.left = sl.x+'px'; el.style.top = sl.y+'px';
-  el.style.width = sl.s+'px'; el.style.height = sl.s+'px';
-  el.style.zIndex = sl.z;
-  const img = document.createElement('img'); el.appendChild(img);
-  stage.appendChild(el);
-
-  const off = edgeOffset(sl);
-  // лёгкий дрейф під час показу (унікальний на слот, малий — центр лишається чистим)
-  const drift = { x: (i%2?1:-1)*22, y: (i%3?-1:1)*16 };
-  const HOLD = 5200 + i*450;        // різна тривалість показу → десинхрон
-
-  function cycle(){
-    img.src = nextPhoto();
-    el.style.transition = 'none';
-    el.style.transform = `translate(${off.x}px,${off.y}px) scale(.9)`;
-    el.style.opacity = '0';
-    void el.offsetWidth;                                   // reflow
-    el.style.transition = 'transform 1.4s cubic-bezier(.22,1,.36,1), opacity 1s ease';
-    el.style.transform = 'translate(0,0) scale(1)';
-    el.style.opacity = '1';
-    setTimeout(()=>{ el.style.transition='transform 6s linear'; el.style.transform=`translate(${drift.x}px,${drift.y}px) scale(1)`; }, 1500);
-    setTimeout(()=>{ el.style.transition='transform 1.4s cubic-bezier(.4,0,1,.4), opacity 1.1s ease';
-                     el.style.transform=`translate(${drift.x*1.8 + off.x*0.35}px,${drift.y*1.8 + off.y*0.35}px) scale(.92)`;
-                     el.style.opacity='0'; }, HOLD);
-    setTimeout(cycle, HOLD + 1500);
-  }
-  setTimeout(cycle, 700 + i*650);                          // стартовий стаггер
-}
-
-/* формат фото: AVIF → WebP → JPG (одна детекція, потім будуємо слоти) */
+/* детекція формату, потім запуск потоку */
 const AVIF_TEST="data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUEAAADrbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAAAAAAAOcGl0bQAAAAAAAQAAAB5pbG9jAAAAAEQAAAEAAQAAAAEAAAETAAAAHQAAAChpaW5mAAAAAAABAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAABqaXBycAAAAEtpcGNvAAAAFGlzcGUAAAAAAAAAAgAAAAIAAAAQcGl4aQAAAAADCAgIAAAADGF2MUOBIAAAAAAAE2NvbHJuY2x4AAEADQAGgAAAABdpcG1hAAAAAAAAAAEAAQQBAoMEAAAAJW1kYXQSAAoHOAA2kBDQaTIQGUJjBMPPPPNBIACQQRHSgA==";
 const WEBP_TEST="data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==";
 function canDecode(uri){ return new Promise(r=>{ const im=new Image(); im.onload=()=>r(im.width>0); im.onerror=()=>r(false); im.src=uri; }); }
 (async()=>{
   if(await canDecode(AVIF_TEST)) FMT='avif';
   else if(await canDecode(WEBP_TEST)) FMT='webp';
-  POOL = Array.from({length:N}, (_,i)=> `../assets/photos/photo-${String(i+1).padStart(2,'0')}.${FMT}`);
-  SLOTS.forEach(makeSlot);
+  POOL = buildPool(); bag = [];
+  for(let i=0;i<11;i++) makePhoto(true);                            // 11 фото — потік, не стіна
+  stream.forEach(place);                                            // перший кадр одразу
+  last = performance.now(); setInterval(loop, 16);                  // ~60fps, dt-based (рівна швидкість)
 })();
 
-/* текст проявляється першим (shun-shun), потім летять фото */
+/* текст проявляється першим (shun-shun), потім пливуть фото */
 setTimeout(()=> stage.classList.add('ready'), 80);
 </script>
 </body>
